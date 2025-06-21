@@ -1,0 +1,56 @@
+// https://aka.ms/devcontainer.json
+{
+	"name": "Kirke-Foto",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "kirke-foto",
+	"workspaceFolder": "/var/www/html",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"DEVSENSE.phptools-vscode",
+				"mikestead.dotenv",
+				"codingyu.laravel-goto-view",
+				"naoray.laravel-goto-components",
+				"sanderronde.phpstan-vscode",
+				"calebporzio.better-phpunit",
+				"eamodio.gitlens",
+				"atlassian.atlascode",
+				"austenc.vscode-laravel-docs",
+				"open-southeners.laravel-pint"
+			],
+			"settings": {
+				"files.autoSave": "onFocusChange",
+				"files.defaultLanguage": "markdown",
+				"files.encoding": "utf8",
+				"files.eol": "\n",
+				"files.insertFinalNewline": true,
+				"files.trimFinalNewlines": true,
+				"files.trimTrailingWhitespace": true,
+				"phpcs.showSources": true,
+				"laravel-pint.enable": true,
+				"editor.formatOnSave": true,
+				"php.validate.enable": false,
+				"php.suggest.basic": false,
+				"[php]": {
+					"editor.defaultFormatter": "open-southeners.laravel-pint"
+				},
+				"[blade]": {
+					"editor.autoClosingBrackets": "always",
+					"editor.defaultFormatter": "open-southeners.laravel-pint",
+					"editor.formatOnSave": true
+				}
+			}
+		}
+	},
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/sail/.ssh,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.gitconfig,target=/home/sail/.gitconfig,type=bind,consistency=cached"
+	],
+	"remoteUser": "sail",
+	"postCreateCommand": "chown -R $WWWUSER:$WWWGROUP /var/www/html"
+	// "forwardPorts": [],
+	// "runServices": [],
+	// "shutdownAction": "none",
+}
