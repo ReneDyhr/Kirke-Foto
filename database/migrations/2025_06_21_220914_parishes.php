@@ -12,13 +12,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('dioceses', function (Blueprint $table): void {
+        Schema::create('parishes', function (Blueprint $table): void {
             $table->id();
+            $table->foreignId('deanery_id')
+                ->constrained('deaneries')
+                ->onDelete('cascade');
+            $table->string('url');
             $table->string('name');
             $table->text('description')->nullable();
+            $table->text('placemark')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->comment('Sift');
         });
     }
 
@@ -27,6 +31,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('dioceses');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('parishes');
+        Schema::enableForeignKeyConstraints();
     }
 };
