@@ -19,7 +19,7 @@ return new class extends Migration {
                 ->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->text('placemark')->nullable();
+            $table->longText('placemark')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->comment('Provsti');

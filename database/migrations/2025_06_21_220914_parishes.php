@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('url');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->text('placemark')->nullable();
+            $table->longText('placemark')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
