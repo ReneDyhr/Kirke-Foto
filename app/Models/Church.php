@@ -30,4 +30,12 @@ class Church extends Model
     {
         return $this->belongsTo(Parish::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<ChurchImage, $this>
+     */
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ChurchImage::class);
+    }
 }
