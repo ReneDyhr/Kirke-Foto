@@ -9,65 +9,33 @@
         <div class="form-group">
             <label>Stift</label>
             <select id="stift">
-                <option value="1">Aalborg Provsti</option>
-                <option value="2">Aarhus Provsti</option>
-                <option value="3">Bornholm Provsti</option>
-                <option value="4">Esbjerg Provsti</option>
-                <option value="5">Fyns Provsti</option>
-                <option value="6">Københavns Provsti</option>
-                <option value="7">Lolland-Falsters Provsti</option>
-                <option value="8">Ribe Provsti</option>
-                <option value="9">Ringkøbing Provsti</option>
-                <option value="10">Roskilde Provsti</option>
-                <option value="11">Svendborg Provsti</option>
+                @foreach ($dioceses as $diocese)
+                    <option value="{{ $diocese->id }}">{{ $diocese->name }}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group">
             <label>Provsti</label>
             <select id="provsti">
-                <option value="1">Aalborg Provsti</option>
-                <option value="2">Aarhus Provsti</option>
-                <option value="3">Bornholm Provsti</option>
-                <option value="4">Esbjerg Provsti</option>
-                <option value="5">Fyns Provsti</option>
-                <option value="6">Københavns Provsti</option>
-                <option value="7">Lolland-Falsters Provsti</option>
-                <option value="8">Ribe Provsti</option>
-                <option value="9">Ringkøbing Provsti</option>
-                <option value="10">Roskilde Provsti</option>
-                <option value="11">Svendborg Provsti</option>
+                @foreach ($deaneries as $deanery)
+                    <option value="{{ $deanery->id }}">{{ $deanery->name }}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group">
             <label>Sogn</label>
             <select id="sogn">
-                <option value="1">Aalborg Provsti</option>
-                <option value="2">Aarhus Provsti</option>
-                <option value="3">Bornholm Provsti</option>
-                <option value="4">Esbjerg Provsti</option>
-                <option value="5">Fyns Provsti</option>
-                <option value="6">Københavns Provsti</option>
-                <option value="7">Lolland-Falsters Provsti</option>
-                <option value="8">Ribe Provsti</option>
-                <option value="9">Ringkøbing Provsti</option>
-                <option value="10">Roskilde Provsti</option>
-                <option value="11">Svendborg Provsti</option>
+                @foreach ($parishes as $parish)
+                    <option value="{{ $parish->id }}">{{ $parish->name }}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group">
             <label>Kirke</label>
             <select id="kirke">
-                <option value="1">Aalborg Provsti</option>
-                <option value="2">Aarhus Provsti</option>
-                <option value="3">Bornholm Provsti</option>
-                <option value="4">Esbjerg Provsti</option>
-                <option value="5">Fyns Provsti</option>
-                <option value="6">Københavns Provsti</option>
-                <option value="7">Lolland-Falsters Provsti</option>
-                <option value="8">Ribe Provsti</option>
-                <option value="9">Ringkøbing Provsti</option>
-                <option value="10">Roskilde Provsti</option>
-                <option value="11">Svendborg Provsti</option>
+                @foreach ($churches as $church)
+                    <option value="{{ $church->id }}">{{ $church->name }}</option>
+                @endforeach
             </select>
         </div>
     </div>
