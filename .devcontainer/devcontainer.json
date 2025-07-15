@@ -18,7 +18,9 @@
 				"eamodio.gitlens",
 				"atlassian.atlascode",
 				"austenc.vscode-laravel-docs",
-				"open-southeners.laravel-pint"
+				"open-southeners.laravel-pint",
+				"onecentlin.laravel-blade",
+				"shufo.vscode-blade-formatter"
 			],
 			"settings": {
 				"files.autoSave": "onFocusChange",
@@ -38,7 +40,7 @@
 				},
 				"[blade]": {
 					"editor.autoClosingBrackets": "always",
-					"editor.defaultFormatter": "open-southeners.laravel-pint",
+					"editor.defaultFormatter": "shufo.vscode-blade-formatter",
 					"editor.formatOnSave": true
 				}
 			}
