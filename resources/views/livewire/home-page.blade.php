@@ -8,36 +8,54 @@
         <p>Der er i alt <b>124</b> kirker med dronetilladelse fra tilhørende menighedsråd.</p>
         <div class="form-group">
             <label>Stift</label>
-            <select id="stift">
-                @foreach ($dioceses as $diocese)
-                    <option value="{{ $diocese->id }}">{{ $diocese->name }}</option>
+            <select id="stift" wire:model.live="selectedDiocese">
+                @foreach ($dioceses as $id => $name)
+                    <option value="{{ $id }}" @if ($id == $selectedDiocese) selected @endif>
+                        {{ $name }}
+                    </option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
             <label>Provsti</label>
-            <select id="provsti">
-                @foreach ($deaneries as $deanery)
-                    <option value="{{ $deanery->id }}">{{ $deanery->name }}</option>
+            <select id="provsti" wire:model.live="selectedDeanery">
+                @foreach ($deaneries as $id => $name)
+                    <option value="{{ $id }}" @if ($id == $selectedDeanery) selected @endif>
+                        {{ $name }}
+                    </option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
             <label>Sogn</label>
-            <select id="sogn">
-                @foreach ($parishes as $parish)
-                    <option value="{{ $parish->id }}">{{ $parish->name }}</option>
+            <select id="sogn" wire:model.live="selectedParish">
+                @foreach ($parishes as $id => $name)
+                    <option value="{{ $id }}" @if ($id == $selectedParish) selected @endif>
+                        {{ $name }}
+                    </option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
             <label>Kirke</label>
-            <select id="kirke">
-                @foreach ($churches as $church)
-                    <option value="{{ $church->id }}">{{ $church->name }}</option>
+            <select id="kirke" wire:model.live="selectedChurch">
+                @foreach ($churches as $id => $name)
+                    <option value="{{ $id }}" @if ($id == $selectedChurch) selected @endif>
+                        {{ $name }}</option>
                 @endforeach
             </select>
         </div>
+        <pre class="bg-gray-100 p-2 rounded text-xs">
+{{ json_encode(
+    [
+        'diocese' => $selectedDiocese,
+        'deanery' => $selectedDeanery,
+        'parish' => $selectedParish,
+        'church' => $selectedChurch,
+    ],
+    JSON_PRETTY_PRINT,
+) }}
+    </pre>
     </div>
     <div class="sidebar">
         <div class="card ">
@@ -61,3 +79,17 @@
         </div>
     </div>
 </div>
+@script
+    <script>
+        console.log('HEJ');
+        document.addEventListener('livewire:load', function() {
+            // Initialize Nice Select2
+            console.log('HERE');
+            niceSelect2.init();
+        });
+
+        Livewire.on('select2Updated', () => {
+            niceSelect2.update();
+        });
+    </script>
+@endscript
