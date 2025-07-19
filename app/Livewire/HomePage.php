@@ -71,16 +71,16 @@ class HomePage extends Component
         $this->js('setTimeout(function() { window.SelectBind(); }, 50);');
         $this->dioceses  = Diocese::has('deaneries.parishes.churches.images', '>', 0)->orderBy('name')->pluck('name', 'id')->all();
         $deaneries = Deanery::has('parishes.churches.images', '>', 0)->orderBy('name');
+        $parishes  = Parish::has('churches.images', '>', 0)->orderBy('name');
+        $churches  = Church::has('images', '>', 0)->orderBy('name');
 
-        if ($this->selectedDiocese !== null) {
+        if ($this->selectedDeanery !== null) {
             $this->deaneries = $deaneries->where('diocese_id', $this->selectedDiocese)
                 ->orderBy('name')->pluck('name', 'id')->all();
+            $churches = $churches->whereIn('parish_id', $parishes->where('deanery_id', $this->selectedDeanery)->pluck('id'))->orderBy('name');
         } else {
             $this->deaneries = $deaneries->pluck('name', 'id')->all();
         }
-
-        $parishes  = Parish::has('churches.images', '>', 0)->orderBy('name');
-        $churches  = Church::has('images', '>', 0)->orderBy('name');
 
         if ($this->selectedParish !== null) {
             $this->parishes = $parishes->where('id', $this->selectedParish)
@@ -91,6 +91,14 @@ class HomePage extends Component
         } else {
             $this->parishes = $parishes->pluck('name', 'id')->all();
             $this->churches = $churches->pluck('name', 'id')->all();
+        }
+
+        if (\count($this->parishes) === 1) {
+            $this->selectedParish = \array_key_first($this->parishes); // restore after resets
+        }
+
+        if (\count($this->churches) === 1) {
+            $this->selectedChurch = \array_key_first($this->churches); // restore after resets
         }
     }
 
@@ -119,20 +127,15 @@ class HomePage extends Component
     {
         $this->reset(['selectedParish', 'selectedChurch']);
 
-        if (!$deaneryId) {
+        if ($deaneryId === null) {
             $this->cascadeFromDiocese($this->selectedDiocese);   // keep diocese filter if any
 
             return;
         }
 
-        $deanery = Deanery::select(['id', 'diocese_id'])->find($deaneryId);
-        $this->forceDiocese($deanery->diocese_id);
-
-        $this->parishes = Parish::where('deanery_id', $deaneryId)
-            ->orderBy('name')->pluck('name', 'id')->all();
-
-        $this->churches = Church::whereIn('parish_id', \array_keys($this->parishes))
-            ->orderBy('name')->pluck('name', 'id')->all();
+        $deanery = Deanery::select(['id', 'diocese_id'])->findOrFail($deaneryId);
+        $this->selectedDiocese = $deanery->diocese_id; // restore after resets
+        $this->updateData();
     }
 
     private function cascadeFromParish(?int $parishId): void
@@ -150,13 +153,6 @@ class HomePage extends Component
 
         $this->selectedDeanery = $deanery->id;        // restore after resets
         $this->selectedDiocese = $deanery->diocese_id; // restore after resets
-
-        $church = Church::where('parish_id', $parishId)
-            ->orderBy('name')->pluck('name', 'id')->all();
-
-        if (\count($church) === 1) {
-            $this->selectedChurch = \array_key_first($church); // restore after resets
-        }
 
         $this->updateData();
     }
