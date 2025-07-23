@@ -30,6 +30,8 @@ class HomePage extends Component
 
     public ?int $selectedChurch  = null;
 
+    public Church $selectedChurchModel;
+
     // ── initial state ────────────────────────────────────────
     public function mount(): void
     {
@@ -109,6 +111,7 @@ class HomePage extends Component
 
         if (\count($this->churches) === 1) {
             $this->selectedChurch = \array_key_first($this->churches); // restore after resets
+            $this->selectedChurchModel = Church::findOrFail($this->selectedChurch);
         }
     }
 
@@ -171,6 +174,7 @@ class HomePage extends Component
         $deanery = Deanery::select('id', 'diocese_id')->findOrFail($parish->deanery_id);
 
         $this->selectedChurch = $churchId;          // restore after resets
+        $this->selectedChurchModel = $church; // restore after resets
         $this->selectedParish  = $parish->id;          // restore after resets
         $this->selectedDeanery = $deanery->id;        // restore after resets
         $this->selectedDiocese = $deanery->diocese_id; // restore after resets

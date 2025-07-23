@@ -45,6 +45,16 @@
                 @endforeach
             </select>
         </div>
+        @if ($selectedChurch)
+            <a class="" href="/kirke/{{ $selectedChurchModel->parish->url }}/{{ $selectedChurchModel->url }}">
+                <button class="btn btn-primary">Gå til
+                    {{ $selectedChurchModel->name }}&nbsp;&nbsp;
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+                <br>
+                <br>
+            </a>
+        @endif
         <pre class="bg-gray-100 p-2 rounded text-xs">
 {{ json_encode(
     [
