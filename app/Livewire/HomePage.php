@@ -12,6 +12,12 @@ use Livewire\Component;
 
 class HomePage extends Component
 {
+    public int $totalChurches = 0; // total number of churches with images
+
+    public int $totalDeaneries = 0; // total number of deaneries with images
+
+    public int $totalDroneAccepted = 0; // total drone images accepted
+
     // ── option lists ──────────────────────────────────────────
     public array $dioceses  = [];   // [id => name]
 
@@ -36,6 +42,10 @@ class HomePage extends Component
     public function mount(): void
     {
         $this->restoreAllBelow();
+
+        $this->totalChurches = Church::has('images')->count();
+        $this->totalDeaneries = Deanery::has('parishes.churches.images')->count();
+        $this->totalDroneAccepted = Church::where('drone_approval', '=', 1)->count();
     }
 
     // ── watchers ─────────────────────────────────────────────

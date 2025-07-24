@@ -3,9 +3,11 @@
         <h1>Velkommen til Kirke-Foto</h1>
         <p>Formålet med denne hjemmeside er, at dokumentere projektet: "Billedlig bevaring af de danske kirker".</p>
         <p>Billederne er originale og er til fri afbenyttelse, såfremt Kirke-Foto.dk er angivet som kilde.</p>
-        <p style="margin-bottom: 0px;">Der er i skrivende stund <b>128</b> kirker oprettet med billeder henover <b>25</b>
+        <p style="margin-bottom: 0px;">Der er i skrivende stund <b>{{ $this->totalChurches }}</b> kirker oprettet med
+            billeder henover <b>{{ $this->totalDeaneries }}</b>
             provstier.</p>
-        <p>Der er i alt <b>124</b> kirker med dronetilladelse fra tilhørende menighedsråd.</p>
+        <p>Der er i alt <b>{{ $this->totalDroneAccepted }}</b> kirker med dronetilladelse fra tilhørende menighedsråd.
+        </p>
         <div class="form-group">
             <label>Stift</label>
             <select id="stift" wire:model.live="selectedDiocese">
