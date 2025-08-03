@@ -488,3 +488,99 @@ footer {
         width: 100%;
     }
 }
+
+
+
+.photos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    @media (max-width: $screen-phone) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    @media (min-width: $screen-phone) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: $screen-tablet) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: $screen-desktop) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (min-width: $screen-lg-desktop) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    //grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+
+.photo {
+    width: 242px;
+    position: relative;
+
+    @media (max-width: $screen-phone) {
+        max-width: 364px;
+        width: 100%;
+    }
+
+    @media (min-width: $screen-phone) {
+        width: 220px;
+    }
+
+    @media (min-width: $screen-tablet) {
+        width: 243px;
+    }
+
+    @media (min-width: $screen-desktop) {
+        width: 235px;
+    }
+
+    @media (min-width: $screen-lg-desktop) {
+        width: 285px;
+    }
+
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+
+    img {
+        width: 100%;
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
+
+        &:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+            cursor: pointer;
+        }
+    }
+
+    .panorama-image {
+        width: 50px;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        user-select: none;
+    }
+}
+
+.church-header {
+    margin-bottom: 0;
+}
+
+.church-breadcrumb {
+    text-transform: uppercase;
+}
+
+.church-text {
+    margin-top: 15px;
+    background-color: #A2AF9F;
+    padding: 1rem 1rem;
+    border-radius: 0.25rem;
+}

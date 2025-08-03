@@ -17,24 +17,26 @@
 </head>
 
 <body class="bg-gray-50 min-h-screen">
-
-    <header class="header">
-        <a aria-current="page" class="logo active" href="/">
-            <img src="https://kirke-foto.dk/logo.svg" alt="Logo">
-            <h1>Kirke-Foto</h1>
-        </a>
-        <nav>
-            <ul class="menu">
-                <li><a aria-current="page" class="active" href="/">Forside</a></li>
-                <li><a class="" href="/kort">Kort</a></li>
-                <li><a class="" href="/om-os">Om os</a></li>
-                <li><a class="" href="/kontakt">Kontakt</a></li>
-            </ul>
-        </nav>
-    </header>
-    {{ $slot }}
-    <footer>© Copyright 2022-2025 - Kirke-Foto.dk af <a href="https://renedyhr.me" target="_blank" rel="noreferrer">René
-            Dyhr</a></footer>
+    <div class="main">
+        <header class="header">
+            <a aria-current="page" class="logo active" href="/">
+                <img src="https://kirke-foto.dk/logo.svg" alt="Logo">
+                <h1>Kirke-Foto</h1>
+            </a>
+            <nav>
+                <ul class="menu">
+                    <li><a aria-current="page" class="active" href="/">Forside</a></li>
+                    <li><a class="" href="/kort">Kort</a></li>
+                    <li><a class="" href="/om-os">Om os</a></li>
+                    <li><a class="" href="/kontakt">Kontakt</a></li>
+                </ul>
+            </nav>
+        </header>
+        {{ $slot }}
+        <footer>© Copyright 2022-2025 - Kirke-Foto.dk af <a href="https://renedyhr.me" target="_blank"
+                rel="noreferrer">René
+                Dyhr</a></footer>
+    </div>
     @livewireScripts
 </body>
 
