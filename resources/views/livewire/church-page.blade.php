@@ -1,8 +1,12 @@
 <div class="content">
     <div>
-        <h1 class="church-header">Gårslev Kirke</h1><span class="church-breadcrumb">Gårslev Sogn - Vejle Provsti -
-            Haderslev Stift</span>
-        <p><a href="https://sogn.dk/gaarslev" target="_blank" rel="noreferrer">Gå til Gårslev Sogn via sogn.dk</a></p>
+        <h1 class="church-header">{{ $churchModel->name }}</h1><span
+            class="church-breadcrumb">{{ $churchModel->parish->name }} - {{ $churchModel->parish->deanery->name }} -
+            {{ $churchModel->parish->deanery->diocese->name }}</span>
+        <p><a href="https://sogn.dk/{{ $churchModel->parish->url }}" target="_blank" rel="noreferrer">Gå til
+                {{ $churchModel->parish->name }}
+                via
+                sogn.dk</a></p>
         <div class="church-text">Det er muligt at få billederne i fuld opløsning, hvis man er medlem af kirkens personale
             eller menighedsråd.</div><br>
         <div class="photos">
@@ -46,14 +50,5 @@
 @script
     <script>
         console.log('HEJ');
-        document.addEventListener('livewire:load', function() {
-            // Initialize Nice Select2
-            console.log('HERE');
-            niceSelect2.init();
-        });
-
-        Livewire.on('select2Updated', () => {
-            niceSelect2.update();
-        });
     </script>
 @endscript
