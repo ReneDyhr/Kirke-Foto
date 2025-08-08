@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Church;
+use App\Models\ChurchImage;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
@@ -25,7 +26,7 @@ class ChurchPage extends Component
             $query->where('url', $this->parish);
         })->where('url', $this->church)->firstOrFail();
 
-        $this->images = $this->churchModel->images()->getQuery()->orderBy('sorting', 'asc')->get()->map(function ($image) {
+        $this->images = $this->churchModel->images()->getQuery()->orderBy('sorting', 'asc')->get()->map(function (ChurchImage $image): array {
             return [
                 'path' => $image->path,
                 'description' => '',
@@ -38,6 +39,7 @@ class ChurchPage extends Component
     public function render(): \Illuminate\View\View
     {
         return \view('livewire.church-page')
-            ->layout('layouts.app');
+            ->layout('layouts.app')
+            ->title($this->churchModel->name);
     }
 }

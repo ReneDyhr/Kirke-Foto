@@ -26,7 +26,6 @@
 </div>
 @script
     <script>
-        console.log('HEJ');
         const images = JSON.parse('{!! json_encode($images) !!}');
 
         let currentIndex = 0;
