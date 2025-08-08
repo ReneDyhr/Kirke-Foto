@@ -16,12 +16,23 @@ class ChurchPage extends Component
 
     public Church $churchModel;
 
+    public array $images = [];
+
     // ── initial state ────────────────────────────────────────
     public function mount(): void
     {
         $this->churchModel = Church::has('images')->whereHas('parish', function (Builder $query): void {
             $query->where('url', $this->parish);
         })->where('url', $this->church)->firstOrFail();
+
+        $this->images = $this->churchModel->images()->getQuery()->orderBy('sorting', 'asc')->get()->map(function ($image) {
+            return [
+                'path' => $image->path,
+                'description' => '',
+                'date_taken' => $image->date_taken,
+                'panorama' => $image->panorama,
+            ];
+        })->toArray();
     }
 
     public function render(): \Illuminate\View\View

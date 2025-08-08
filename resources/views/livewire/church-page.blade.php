@@ -9,46 +9,145 @@
                 sogn.dk</a></p>
         <div class="church-text">Det er muligt at få billederne i fuld opløsning, hvis man er medlem af kirkens personale
             eller menighedsråd.</div><br>
-        <div class="photos">
-            <div class="photo"><img alt="DSC06857.jpg"
-                    src="https://kirke-foto.dk/images/thumb_eQUvKhr1pccOaJOyQ0bLmUYZ7TQOmkHkqu6TdzFR.jpg"></div>
-            <div class="photo"><img alt="DSC06856.jpg"
-                    src="https://kirke-foto.dk/images/thumb_EUBvLFZoDFZHYpaNLJ9TsOFJz5CiqnTOvAoEp5mY.jpg"></div>
-            <div class="photo"><img alt="DSC06854.jpg"
-                    src="https://kirke-foto.dk/images/thumb_Gx2Ok14Cvc7AUwstAI1vu0q3eSHYe7jNNGY8fBDj.jpg"></div>
-            <div class="photo"><img alt="DSC06863.jpg"
-                    src="https://kirke-foto.dk/images/thumb_nKqJQPVacU7iRj8LRxoIVEgoziXJbDTdI6pUvhE9.jpg"></div>
-            <div class="photo"><img alt="DSC06862.jpg"
-                    src="https://kirke-foto.dk/images/thumb_fISRbrgJDHlSa2Dwh9buzVoDjvPx56SXG3FEgKd4.jpg"></div>
-            <div class="photo"><img alt="DSC06860.jpg"
-                    src="https://kirke-foto.dk/images/thumb_u5Zj4dvmmEhqaZsSicUDEuUnwFcFLwR90SwgzNmT.jpg"></div>
-            <div class="photo"><img alt="DSC06859.jpg"
-                    src="https://kirke-foto.dk/images/thumb_Xc4d1wx8ZE1izWfiUpjWZD1zg6vhlQ0IlLPqL57Q.jpg"></div>
-            <div class="photo"><img alt="DSC06858.jpg"
-                    src="https://kirke-foto.dk/images/thumb_IwD72RglAS88BwMVy4B2GmFb6pWDw63M2yEYBvMx.jpg"></div>
-            <div class="photo"><img alt="DSC06855.jpg"
-                    src="https://kirke-foto.dk/images/thumb_QgK44VwpLjTQtES6nHmKnRyZoPtvkaz43mxL8qC9.jpg"></div>
-            <div class="photo"><img alt="DSC06865.jpg"
-                    src="https://kirke-foto.dk/images/thumb_k90czogC7c8vkiV4e1q1N5Po0MgUS4u8ytP8e5xh.jpg"></div>
-            <div class="photo"><img alt="DJI_0476.jpg"
-                    src="https://kirke-foto.dk/images/thumb_Y1LBtIhwy81gjGYX1VZwIczZM1dp56A30cKWCQAU.jpg"></div>
-            <div class="photo"><img alt="DJI_0477.jpg"
-                    src="https://kirke-foto.dk/images/thumb_K8mqFvoNmOUgPtQQvrMT2Q75kii86r7Rw7T21g19.jpg"></div>
-            <div class="photo"><img alt="DJI_0475.jpg"
-                    src="https://kirke-foto.dk/images/thumb_lLc57vfmRlzgQhnvTdm2D8PpOoHrzumGZRPkvAdc.jpg"></div>
-            <div class="photo"><img alt="DJI_0474.jpg"
-                    src="https://kirke-foto.dk/images/thumb_ZgSUQq1hjj9vNxgdn13QbHFGv59aNBpcjfO0vYk6.jpg"></div>
-            <div class="photo"><img alt="DJI_0478.jpg"
-                    src="https://kirke-foto.dk/images/thumb_ec0VNtOZIRArL3cKD2onJJHofFkqCo65jdiMC3sn.jpg"></div>
-            <div class="photo"><img alt="DJI_0481.jpg"
-                    src="https://kirke-foto.dk/images/thumb_mk1vLFd37KMvLpcLnU7URUMQdohtYcX5K2LB5rqc.jpg"></div>
-            <div class="photo"><img alt="DJI_0479.jpg"
-                    src="https://kirke-foto.dk/images/thumb_fj5N9OoxICPfgyorcDAwEioxq498CZ8tQAom0EU8.jpg"></div>
+        <div id="gallery" class="photos">
+        </div>
+        <div class="image-wrapper" id="viewer" style="display: none;">
+            <div class="top" id="closeBtn"><i class="fa fa-times fa-2x"></i></div>
+            <div class="top panorama-icon" id="panoramaIcon" style="display: none;">
+                <img src="/images/360.png" alt="Panorama" />
+            </div>
+            <div class="previous" id="prevBtn"><i class="fa fa-chevron-left"></i></div>
+            <div class="next" id="nextBtn"><i class="fa fa-chevron-right"></i></div>
+            <div class="shadow"></div>
+            <div class="image" id="imageContainer"></div>
+            <div class="comment" id="comment"></div>
         </div>
     </div>
 </div>
 @script
     <script>
         console.log('HEJ');
+        const images = JSON.parse('{!! json_encode($images) !!}');
+
+        let currentIndex = 0;
+        const gallery = document.getElementById('gallery');
+        const viewer = document.getElementById('viewer');
+        const imageContainer = document.getElementById('imageContainer');
+        const comment = document.getElementById('comment');
+        const panoramaIcon = document.getElementById('panoramaIcon');
+
+        images.forEach((img, i) => {
+            const div = document.createElement('div');
+            div.className = 'photo';
+            const thumb = document.createElement('img');
+            thumb.src = '/images/church/thumb_' + img.path;
+            thumb.alt = img.description;
+            thumb.style.cursor = "pointer";
+            thumb.onclick = () => openViewer(i);
+
+            div.appendChild(thumb);
+            if (img.panorama) {
+                const panoramaThumb = document.createElement('img');
+                panoramaThumb.className = 'panorama-image';
+                panoramaThumb.src = '/images/360.png';
+                div.appendChild(panoramaThumb);
+            }
+            gallery.appendChild(div);
+        });
+
+        function openViewer(index) {
+            currentIndex = index;
+            viewer.style.display = 'block';
+            viewer.classList.remove('scale-in');
+            void viewer.offsetWidth; // trigger reflow
+            viewer.classList.add('scale-in');
+            loadImage();
+        }
+
+        function closeViewer() {
+            viewer.style.display = 'none';
+            imageContainer.innerHTML = '';
+        }
+
+        function loadImage() {
+            const img = images[currentIndex];
+            imageContainer.innerHTML = '';
+            panoramaIcon.style.display = img.panorama ? 'block' : 'none';
+
+            if (img.panorama) {
+                const pano = document.createElement('div');
+                pano.id = "panorama";
+                pano.style.width = '100%';
+                pano.style.height = '100%';
+                imageContainer.appendChild(pano);
+
+                const viewerInstance = pannellum.viewer("panorama", {
+                    type: "equirectangular",
+                    autoLoad: true,
+                    showControls: false,
+                    disableKeyboardCtrl: true,
+                    panorama: "/images/church/high_" + img.path
+                });
+
+                const controls = document.createElement('div');
+                controls.id = "controls";
+                controls.innerHTML = `
+            <div class="ctrl" id="pan-up"><i class="fa fa-caret-up"></i></div>
+            <div class="ctrl" id="pan-down"><i class="fa fa-caret-down"></i></div>
+            <div class="ctrl" id="pan-left"><i class="fa fa-caret-left"></i></div>
+            <div class="ctrl" id="pan-right"><i class="fa fa-caret-right"></i></div>
+            <div class="ctrl" id="zoom-in"><i class="fa fa-plus"></i></div>
+            <div class="ctrl" id="zoom-out"><i class="fa fa-minus"></i></div>
+            <div class="ctrl" id="fullscreen"><i class="fa fa-expand"></i></div>
+        `;
+                pano.appendChild(controls);
+
+                controls.querySelector('#pan-up').onclick = () => viewerInstance.setPitch(viewerInstance.getPitch() + 10);
+                controls.querySelector('#pan-down').onclick = () => viewerInstance.setPitch(viewerInstance.getPitch() - 10);
+                controls.querySelector('#pan-left').onclick = () => viewerInstance.setYaw(viewerInstance.getYaw() - 10);
+                controls.querySelector('#pan-right').onclick = () => viewerInstance.setYaw(viewerInstance.getYaw() + 10);
+                controls.querySelector('#zoom-in').onclick = () => viewerInstance.setHfov(viewerInstance.getHfov() - 10);
+                controls.querySelector('#zoom-out').onclick = () => viewerInstance.setHfov(viewerInstance.getHfov() + 10);
+                controls.querySelector('#fullscreen').onclick = () => viewerInstance.toggleFullscreen();
+            } else {
+                const imgEl = document.createElement('img');
+                imgEl.src = "/images/church/high_" + img.path;
+                imgEl.onload = () => {};
+                imageContainer.appendChild(imgEl);
+            }
+
+            const date = new Date(img.date_taken);
+            comment.innerHTML = `Taget: ${date.toLocaleDateString('da')}<br>${img.description}`;
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            loadImage();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            loadImage();
+        }
+
+        document.getElementById('closeBtn').onclick = closeViewer;
+        document.getElementById('nextBtn').onclick = nextImage;
+        document.getElementById('prevBtn').onclick = prevImage;
+
+        document.addEventListener('keydown', e => {
+            if (viewer.style.display === 'block') {
+                if (e.key === 'Escape') closeViewer();
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+            }
+        });
+
+        let touchStartX = 0;
+        imageContainer.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].clientX);
+        imageContainer.addEventListener('touchend', e => {
+            const delta = e.changedTouches[0].clientX - touchStartX;
+            if (delta > 50) prevImage();
+            else if (delta < -50) nextImage();
+        });
     </script>
 @endscript

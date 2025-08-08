@@ -12,6 +12,8 @@
     <link href="
     https://cdn.jsdelivr.net/npm/nice-select2@2.3.1/dist/css/nice-select2.min.css
     " rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" rel="stylesheet" />
     @livewireStyles
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
@@ -20,7 +22,7 @@
     <div class="main">
         <header class="header">
             <a aria-current="page" class="logo active" href="/">
-                <img src="https://kirke-foto.dk/logo.svg" alt="Logo">
+                <img src="/images/logo.svg" alt="Logo">
                 <h1>Kirke-Foto</h1>
             </a>
             <nav>
