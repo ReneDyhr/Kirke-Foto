@@ -30,6 +30,7 @@
         const images = JSON.parse('{!! json_encode($images) !!}');
 
         let currentIndex = 0;
+        const body = document.querySelector('body');
         const gallery = document.getElementById('gallery');
         const viewer = document.getElementById('viewer');
         const imageContainer = document.getElementById('imageContainer');
@@ -61,11 +62,15 @@
             viewer.classList.remove('scale-in');
             void viewer.offsetWidth; // trigger reflow
             viewer.classList.add('scale-in');
+            viewer.style.top = `${window.scrollY}px`;
+            body.style.overflow = 'hidden';
             loadImage();
         }
 
         function closeViewer() {
             viewer.style.display = 'none';
+            body.style.overflow = '';
+
             imageContainer.innerHTML = '';
         }
 
