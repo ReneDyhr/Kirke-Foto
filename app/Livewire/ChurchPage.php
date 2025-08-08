@@ -17,6 +17,9 @@ class ChurchPage extends Component
 
     public Church $churchModel;
 
+    /**
+     * @var array<int, array{path: string, description: string, date_taken: ?string, panorama: bool}>
+     */
     public array $images = [];
 
     // ── initial state ────────────────────────────────────────
@@ -26,7 +29,10 @@ class ChurchPage extends Component
             $query->where('url', $this->parish);
         })->where('url', $this->church)->firstOrFail();
 
-        $this->images = $this->churchModel->images()->getQuery()->orderBy('sorting', 'asc')->get()->map(function (ChurchImage $image): array {
+        /**
+         * @var array<int, array{path: string, description: string, date_taken: ?string, panorama: bool}>
+         */
+        $images = $this->churchModel->images()->getQuery()->orderBy('sorting', 'asc')->get()->map(function (ChurchImage $image): array {
             return [
                 'path' => $image->path,
                 'description' => '',
@@ -34,6 +40,8 @@ class ChurchPage extends Component
                 'panorama' => $image->panorama,
             ];
         })->toArray();
+
+        $this->images = $images;
     }
 
     public function render(): \Illuminate\View\View
