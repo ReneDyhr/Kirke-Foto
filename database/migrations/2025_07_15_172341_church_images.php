@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('church_images', function (Blueprint $table) {
+        Schema::create('church_images', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('church_id')->constrained()->onDelete('cascade');
             $table->date('date_taken')->nullable();
