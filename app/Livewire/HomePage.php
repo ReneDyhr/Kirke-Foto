@@ -72,7 +72,8 @@ class HomePage extends Component
     public function render(): \Illuminate\View\View
     {
         return \view('livewire.home-page')
-            ->layout('layouts.app');
+            ->layout('layouts.app')
+            ->title('Forside');
     }
 
     private function updateData(): void
