@@ -27,9 +27,9 @@
             </a>
             <nav>
                 <ul class="menu">
-                    <li><a aria-current="page" class="active" href="/">Forside</a></li>
+                    <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">Forside</a></li>
                     <li><a class="" href="/kort">Kort</a></li>
-                    <li><a class="" href="/om-os">Om os</a></li>
+                    <li><a class="{{ request()->is('/om-os') ? 'active' : '' }}" href="/om-os">Om os</a></li>
                     <li><a class="" href="/kontakt">Kontakt</a></li>
                 </ul>
             </nav>
