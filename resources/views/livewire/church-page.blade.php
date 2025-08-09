@@ -78,7 +78,16 @@
             imageContainer.innerHTML = '';
             panoramaIcon.style.display = img.panorama ? 'block' : 'none';
 
+            // Show loading icon
+            const loading = document.createElement('img');
+            loading.src = '/images/loading.gif';
+            loading.alt = 'Loading...';
+            loading.className = 'loading-icon';
+            imageContainer.appendChild(loading);
+
             if (img.panorama) {
+                // Remove loading icon before initializing panorama
+                imageContainer.innerHTML = '';
                 const pano = document.createElement('div');
                 pano.id = "panorama";
                 pano.style.width = '100%';
@@ -116,8 +125,12 @@
             } else {
                 const imgEl = document.createElement('img');
                 imgEl.src = "/images/church/high_" + img.path;
-                imgEl.onload = () => {};
-                imageContainer.appendChild(imgEl);
+                imgEl.onload = () => {
+                    // Remove loading icon and show image
+                    imageContainer.innerHTML = '';
+                    imageContainer.appendChild(imgEl);
+                };
+                // The image will be shown after loading
             }
 
             const date = new Date(img.date_taken);
