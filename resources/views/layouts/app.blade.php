@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico" />
     <title>{{ $title ?? 'Kirke-Foto' }} - Kirke-Foto</title>
     <script src="https://kit.fontawesome.com/8a902d7685.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;500;600;700;800&display=swap"
@@ -29,8 +30,8 @@
                 <ul class="menu">
                     <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">Forside</a></li>
                     <li><a class="" href="/kort">Kort</a></li>
-                    <li><a class="{{ request()->is('/om-os') ? 'active' : '' }}" href="/om-os">Om os</a></li>
-                    <li><a class="" href="/kontakt">Kontakt</a></li>
+                    <li><a class="{{ request()->is('om-os') ? 'active' : '' }}" href="/om-os">Om os</a></li>
+                    <li><a class="{{ request()->is('kontakt') ? 'active' : '' }}" href="/kontakt">Kontakt</a></li>
                 </ul>
             </nav>
         </header>
