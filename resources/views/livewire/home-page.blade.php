@@ -57,17 +57,6 @@
                 <br>
             </a>
         @endif
-        <pre class="bg-gray-100 p-2 rounded text-xs">
-{{ json_encode(
-    [
-        'diocese' => $selectedDiocese,
-        'deanery' => $selectedDeanery,
-        'parish' => $selectedParish,
-        'church' => $selectedChurch,
-    ],
-    JSON_PRETTY_PRINT,
-) }}
-    </pre>
     </div>
     <div class="sidebar">
         <div class="card ">
@@ -75,16 +64,13 @@
                 <h5 class="card-title">Seneste opdaterede</h5>
                 <div class="card-text">
                     <ul class="latest-churches">
-                        <li><a class="" href="/kirke/gaarslev/gaarslev-kirke">Gårslev Kirke</a></li>
-                        <li><a class="" href="/kirke/brudager/brudager-kirke">Brudager Kirke</a></li>
-                        <li><a class="" href="/kirke/gauerslund/brejning-kirke">Brejning Kirke</a></li>
-                        <li><a class="" href="/kirke/oesterhurup/oester-hurup-kirke">Øster Hurup Kirke</a></li>
-                        <li><a class="" href="/kirke/roerslev/roerslev-kirke">Roerslev Kirke</a></li>
-                        <li><a class="" href="/kirke/als/als-kirke">Als Kirke</a></li>
-                        <li><a class="" href="/kirke/bredballe/bredballe-kirke">Bredballe Kirke</a></li>
-                        <li><a class="" href="/kirke/mou/mou-kirke">Mou Kirke</a></li>
-                        <li><a class="" href="/kirke/mou/dokkedal-kirke">Dokkedal Kirke</a></li>
-                        <li><a class="" href="/kirke/norup/hasmark-kirke">Hasmark Kirke</a></li>
+                        @foreach ($latestChurches as $church)
+                            <li>
+                                <a class="" href="/kirke/{{ $church['parish']['url'] }}/{{ $church['url'] }}">
+                                    {{ $church['name'] }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -93,10 +79,8 @@
 </div>
 @script
     <script>
-        console.log('HEJ');
         document.addEventListener('livewire:load', function() {
             // Initialize Nice Select2
-            console.log('HERE');
             niceSelect2.init();
         });
 

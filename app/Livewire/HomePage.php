@@ -27,6 +27,8 @@ class HomePage extends Component
 
     public array $churches  = [];
 
+    public array $latestChurches = [];
+
     // ── current selections ───────────────────────────────────
     public ?int $selectedDiocese = null;
 
@@ -46,6 +48,24 @@ class HomePage extends Component
         $this->totalChurches = Church::has('images')->count();
         $this->totalDeaneries = Deanery::has('parishes.churches.images')->count();
         $this->totalDroneAccepted = Church::where('drone_approval', '=', 1)->count();
+
+        // Populate the 10 latest churches by the most recent image added
+        $this->latestChurches = Church::has('images')
+            ->with('parish:id,url')
+            ->withMax('images', 'created_at')
+            ->orderByDesc('images_max_created_at')
+            ->limit(10)
+            ->get(['id', 'name', 'url', 'parish_id'])
+            ->map(function (Church $church): array {
+                return [
+                    'name' => $church->name,
+                    'url' => $church->url,
+                    'parish' => [
+                        'url' => $church->parish->url ?? '',
+                    ],
+                ];
+            })
+            ->all();
     }
 
     // ── watchers ─────────────────────────────────────────────
