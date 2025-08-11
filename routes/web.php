@@ -6,9 +6,11 @@ use App\Livewire\AboutUsPage;
 use App\Livewire\ChurchPage;
 use App\Livewire\ContactPage;
 use App\Livewire\HomePage;
+use App\Livewire\MapPage;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class);
+Route::get('/kort', MapPage::class);
 Route::get('/om-os', AboutUsPage::class);
 Route::get('/kontakt', ContactPage::class);
 Route::get('/kirke/{parish}/{church}', ChurchPage::class);

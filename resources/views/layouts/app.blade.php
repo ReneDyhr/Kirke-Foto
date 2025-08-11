@@ -29,7 +29,7 @@
             <nav>
                 <ul class="menu">
                     <li><a class="{{ request()->is('/') ? 'active' : '' }}" href="/">Forside</a></li>
-                    <li><a class="" href="/kort">Kort</a></li>
+                    <li><a class="{{ request()->is('kort') ? 'active' : '' }}" href="/kort">Kort</a></li>
                     <li><a class="{{ request()->is('om-os') ? 'active' : '' }}" href="/om-os">Om os</a></li>
                     <li><a class="{{ request()->is('kontakt') ? 'active' : '' }}" href="/kontakt">Kontakt</a></li>
                 </ul>
@@ -41,6 +41,7 @@
                 Dyhr</a></footer>
     </div>
     @livewireScripts
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1O33PxYdUCfITPpJblqE9yk_k5BtiIcA" async defer></script>
 </body>
 
 </html>
