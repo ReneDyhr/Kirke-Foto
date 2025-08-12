@@ -41,4 +41,12 @@ class Church extends Model
     {
         return $this->hasMany(ChurchImage::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<ChurchCommunication, $this>
+     */
+    public function communications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ChurchCommunication::class);
+    }
 }

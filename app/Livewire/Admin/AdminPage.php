@@ -22,6 +22,7 @@ class AdminPage extends Component
                 'parish.deanery:id,name,diocese_id',
                 'parish.deanery.diocese:id,name',
                 'images:id,church_id',
+                'communications:id,church_id,subject,message,sent_at,updated_at',
             ])
             // ->select(['id', 'name', 'drone_approval', 'open_area', 'contact_later', 'seo_description', 'seo_tags', 'parish_id'])
             ->orderBy('name')

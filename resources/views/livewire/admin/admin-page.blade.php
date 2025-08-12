@@ -26,7 +26,12 @@
                         <td>{{ $church->drone_approval ? 'Yes' : 'No' }}</td>
                         <td>
                             <a href="" class="btn btn-default"><i class="fa fa-edit"></i></a>
-                            <a href="" class="btn btn-default"><i class="fa fa-inbox" data-count="1"></i></a>
+                            @if ($church->communications->count() > 0)
+                                <a href="" class="btn btn-default"><i class="fa fa-inbox"
+                                        data-count="{{ $church->communications->count() }}"></i></a>
+                            @else
+                                <a href="" class="btn btn-default"><i class="fa fa-inbox"></i></a>
+                            @endif
                             <a href="" class="btn btn-default"><i class="fa fa-camera"></i></a>
                         </td>
                     </tr>
