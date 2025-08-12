@@ -797,3 +797,37 @@ footer {
 .gm-style-iw.gm-style-iw-c {
     padding-top: 10px !important;
 }
+
+.table {
+    width: 100%;
+
+    th {
+        text-align: left;
+    }
+
+    td {
+        word-wrap: break-word;
+    }
+}
+
+[data-count] {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+[data-count]:after {
+    background: rgba(255, 0, 0, 0.85);
+    border-radius: 999px;
+    color: #fff;
+    content: attr(data-count);
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 10px;
+    min-width: 1.2em;
+    padding: 0.6em;
+    position: absolute;
+    right: -16px;
+    text-align: center;
+    top: 2px;
+}
