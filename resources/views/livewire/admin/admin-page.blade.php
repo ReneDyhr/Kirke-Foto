@@ -32,7 +32,7 @@
                             @else
                                 <a href="" class="btn btn-default"><i class="fa fa-inbox"></i></a>
                             @endif
-                            <a href="" class="btn btn-default"><i class="fa fa-camera"></i></a>
+                            <a href="/admin/church/{{ $church->id }}/images" class="btn btn-default"><i class="fa fa-camera"></i></a>
                         </td>
                     </tr>
                 @endforeach

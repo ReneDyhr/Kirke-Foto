@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="/images/favicon.ico" />
     <title>{{ $title ?? 'Kirke-Foto' }} - Kirke-Foto</title>
     <script src="https://kit.fontawesome.com/8a902d7685.js" crossorigin="anonymous"></script>
@@ -15,6 +16,15 @@
     " rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" rel="stylesheet" />
+    <!-- Alpine.js guarded loader to avoid multiple instances -->
+    <script>
+        if (!window.Alpine) {
+            var s = document.createElement('script');
+            s.src = 'https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js';
+            s.defer = true;
+            document.head.appendChild(s);
+        }
+    </script>
     @livewireStyles
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
@@ -36,6 +46,7 @@
         </header>
         @if (auth()->check())
             {{ $slot }}
+            @yield('content')
         @else
             @livewire('auth.login-form')
         @endif
