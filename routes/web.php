@@ -27,7 +27,10 @@ Route::get('/images/church/{path}', [App\Http\Controllers\ChurchImageController:
 Route::get('/admin/', AdminPage::class);
 
 // Admin: Church images management
-Route::get('/admin/church/{church}/images', \App\Livewire\Admin\ChurchImagesPage::class);
+Route::get('/admin/church/{church}/images', App\Livewire\Admin\ChurchImagesPage::class);
+
+// Admin: Church communications management
+Route::get('/admin/church/{church}/communications', App\Livewire\Admin\ChurchCommunicationsPage::class);
 
 // Route::post('/logout', function (): RedirectResponse {
 //     Auth::logout();

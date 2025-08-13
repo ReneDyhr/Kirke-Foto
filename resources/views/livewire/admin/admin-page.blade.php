@@ -27,12 +27,14 @@
                         <td>
                             <a href="" class="btn btn-default"><i class="fa fa-edit"></i></a>
                             @if ($church->communications->count() > 0)
-                                <a href="" class="btn btn-default"><i class="fa fa-inbox"
-                                        data-count="{{ $church->communications->count() }}"></i></a>
+                                <a href="/admin/church/{{ $church->id }}/communications" class="btn btn-default"><i
+                                        class="fa fa-inbox" data-count="{{ $church->communications->count() }}"></i></a>
                             @else
-                                <a href="" class="btn btn-default"><i class="fa fa-inbox"></i></a>
+                                <a href="/admin/church/{{ $church->id }}/communications" class="btn btn-default"><i
+                                        class="fa fa-inbox"></i></a>
                             @endif
-                            <a href="/admin/church/{{ $church->id }}/images" class="btn btn-default"><i class="fa fa-camera"></i></a>
+                            <a href="/admin/church/{{ $church->id }}/images" class="btn btn-default"><i
+                                    class="fa fa-camera"></i></a>
                         </td>
                     </tr>
                 @endforeach
