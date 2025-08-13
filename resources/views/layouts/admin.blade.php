@@ -16,8 +16,13 @@
     " rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" rel="stylesheet" />
-    <!-- Alpine.js guarded loader to avoid multiple instances -->
+    <!-- Alpine.js loader that waits for Livewire to init so $wire is available -->
     <script>
+        window.deferLoadingAlpine = function (callback) {
+            window.addEventListener('livewire:init', function () {
+                callback();
+            });
+        };
         if (!window.Alpine) {
             var s = document.createElement('script');
             s.src = 'https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js';
