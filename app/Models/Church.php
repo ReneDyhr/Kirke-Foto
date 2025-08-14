@@ -26,6 +26,12 @@ class Church extends Model
         'updated_at',
     ];
 
+    protected $casts = [
+        'drone_approval' => 'boolean',
+        'open_area' => 'boolean',
+        'contact_later' => 'boolean',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Parish, $this>
      */

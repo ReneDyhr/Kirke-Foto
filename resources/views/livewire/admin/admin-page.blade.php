@@ -25,7 +25,7 @@
                         <td>{{ $church->images->count() }}</td>
                         <td>{{ $church->drone_approval ? 'Yes' : 'No' }}</td>
                         <td>
-                            <a href="" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                            <a href="/admin/church/{{ $church->id }}/edit" class="btn btn-default"><i class="fa fa-edit"></i></a>
                             @if ($church->communications->count() > 0)
                                 <a href="/admin/church/{{ $church->id }}/communications" class="btn btn-default"><i
                                         class="fa fa-inbox" data-count="{{ $church->communications->count() }}"></i></a>

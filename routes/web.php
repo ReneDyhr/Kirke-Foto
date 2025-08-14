@@ -26,6 +26,9 @@ Route::get('/images/church/{path}', [App\Http\Controllers\ChurchImageController:
 // Admin entry - shows login inside layout if not authenticated
 Route::get('/admin/', AdminPage::class);
 
+// Admin: Church edit
+Route::get('/admin/church/{church}/edit', App\Livewire\Admin\ChurchEditPage::class);
+
 // Admin: Church images management
 Route::get('/admin/church/{church}/images', App\Livewire\Admin\ChurchImagesPage::class);
 
