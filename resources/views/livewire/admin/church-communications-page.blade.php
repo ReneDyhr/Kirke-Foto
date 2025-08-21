@@ -52,9 +52,9 @@
                                 <td style="white-space: pre-wrap;">{{ $comm->message }}</td>
                                 <td>{{ optional($comm->sent_at)->format('Y-m-d H:i') }}</td>
                                 <td>
-                                    <button wire:click="deleteCommunication({{ $comm->id }})" type="button"
-                                        class="btn btn-danger" onclick="return confirm('Slet denne kommunikation?')"><i
-                                            class="fa fa-trash"></i></button>
+                                    <button wire:confirm="Slet denne kommunikation?"
+                                        wire:click="deleteCommunication({{ $comm->id }})" type="button"
+                                        class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                         @empty
