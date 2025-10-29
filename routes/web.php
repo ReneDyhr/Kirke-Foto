@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\SitemapController;
 use App\Livewire\AboutUsPage;
 use App\Livewire\Admin\AdminPage;
 use App\Livewire\Auth\LoginPage;
@@ -19,6 +20,7 @@ Route::get('/om-os', AboutUsPage::class);
 Route::get('/kontakt', ContactPage::class);
 Route::get('/kirke/{parish}/{church}', ChurchPage::class);
 Route::get('/images/church/{path}', [App\Http\Controllers\ChurchImageController::class, 'show'])->where('path', '.*');
+Route::get('/sitemap.xml', SitemapController::class);
 
 // Login page (optional, for direct logins)
 // Route::get('/login', LoginPage::class)->name('login');
