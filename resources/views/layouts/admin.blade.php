@@ -63,7 +63,7 @@
                 Dyhr</a></footer>
     </div>
     @livewireScripts
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1O33PxYdUCfITPpJblqE9yk_k5BtiIcA" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1O33PxYdUCfITPpJblqE9yk_k5BtiIcA"></script>
 </body>
 
 </html>
