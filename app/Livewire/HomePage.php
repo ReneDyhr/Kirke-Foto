@@ -127,9 +127,15 @@ class HomePage extends Component
         }
 
         if ($this->selectedParish !== null) {
-            $this->parishes = $parishes->where('id', $this->selectedParish)
-                ->orderBy('name')->pluck('name', 'id')->all();
+            // Keep showing all parishes within the selected deanery (do not collapse to one)
+            if ($this->selectedDeanery !== null) {
+                $this->parishes = $parishes->where('deanery_id', $this->selectedDeanery)
+                    ->orderBy('name')->pluck('name', 'id')->all();
+            } else {
+                $this->parishes = $parishes->pluck('name', 'id')->all();
+            }
 
+            // Limit churches to the selected parish
             $this->churches = $churches->where('parish_id', $this->selectedParish)
                 ->orderBy('name')->pluck('name', 'id')->all();
         } else {
