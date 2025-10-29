@@ -8,6 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property Parish                          $parish
+ * @property ChurchImage[]                   $images
+ * @property ChurchCommunication[]           $communications
+ * @property int                             $id
+ * @property string                          $url
+ * @property string                          $name
+ * @property string                          $seo_description
+ * @property string                          $seo_tags
+ * @property float                           $latitude
+ * @property float                           $longitude
+ * @property int                             $parish_id
+ * @property bool                            $drone_approval
+ * @property bool                            $open_area
+ * @property bool                            $contact_later
+ * @property null|\Illuminate\Support\Carbon $updated_at
+ * @property null|\Illuminate\Support\Carbon $deleted_at
+ */
 class Church extends Model
 {
     use SoftDeletes;

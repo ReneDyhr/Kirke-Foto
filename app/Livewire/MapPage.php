@@ -9,10 +9,12 @@ use Livewire\Component;
 
 class MapPage extends Component
 {
+    /** @var list<array{name: string, id: int, url: string, latitude: float, longitude: float, parish: string, parish_url: string, deanery: string, diocese: string}> */
     public array $churches  = [];
 
     public function mount(): void
     {
+        // @phpstan-ignore assign.propertyType
         $this->churches  = Church::has('images', '>', 0)->orderBy('name')->get()->map(function (Church $church): array {
             return [
                 'name' => $church->name,
@@ -23,9 +25,7 @@ class MapPage extends Component
                 'parish' => $church->parish->name ?? '',
                 'parish_url' => $church->parish->url ?? '',
                 'deanery' => $church->parish->deanery->name ?? '',
-                'deanery_url' => $church->parish->deanery->url ?? '',
                 'diocese' => $church->parish->deanery->diocese->name ?? '',
-                'diocese_url' => $church->parish->deanery->diocese->url ?? '',
             ];
         })->toArray();
     }

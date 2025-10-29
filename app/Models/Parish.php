@@ -9,6 +9,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property Deanery                         $deanery
+ * @property Church[]                        $churches
+ * @property int                             $id
+ * @property int                             $deanery_id
+ * @property string                          $url
+ * @property string                          $name
+ * @property string                          $placemark
+ * @property null|\Illuminate\Support\Carbon $updated_at
+ * @property null|\Illuminate\Support\Carbon $deleted_at
+ */
 class Parish extends Model
 {
     use SoftDeletes;

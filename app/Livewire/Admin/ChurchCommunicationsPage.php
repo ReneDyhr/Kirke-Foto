@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.admin')]
+#[Layout(name: 'layouts.admin')]
 class ChurchCommunicationsPage extends Component
 {
     public Church $church;

@@ -19,14 +19,19 @@ class HomePage extends Component
     public int $totalDroneAccepted = 0; // total drone images accepted
 
     // ── option lists ──────────────────────────────────────────
+    /** @var array<mixed> */
     public array $dioceses  = [];   // [id => name]
 
+    /** @var array<mixed> */
     public array $deaneries = [];
 
+    /** @var array<mixed> */
     public array $parishes  = [];
 
+    /** @var array<mixed> */
     public array $churches  = [];
 
+    /** @var array<int, array{name: string, url: string, parish: array{url: string}}> */
     public array $latestChurches = [];
 
     // ── current selections ───────────────────────────────────

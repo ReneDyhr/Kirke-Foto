@@ -58,7 +58,7 @@ class ChurchImagesPage extends Component
             $imageManagerClass = 'Intervention\\Image\\ImageManager';
             $driverClass = 'Intervention\\Image\\Drivers\\Gd\\Driver';
 
-            /** @var object $manager */
+            /** @var \Intervention\Image\ImageManager $manager */
             $manager = new $imageManagerClass(new $driverClass());
 
             $max = $this->church->images()->max('sorting');
@@ -79,7 +79,7 @@ class ChurchImagesPage extends Component
                 // EXIF date
                 $dateTaken = null;
                 $exif = @\exif_read_data($file->getRealPath()) ?: [];
-                $dtoStr = \is_array($exif) && \array_key_exists('DateTimeOriginal', $exif) ? $exif['DateTimeOriginal'] : null;
+                $dtoStr = \array_key_exists('DateTimeOriginal', $exif) ? $exif['DateTimeOriginal'] : null;
 
                 if (\is_string($dtoStr) && $dtoStr !== '') {
                     try {
@@ -123,7 +123,7 @@ class ChurchImagesPage extends Component
 
         // Send updated images back to the browser so Alpine can refresh
         $updated = $this->church->images()->orderBy('sorting')->get(['id', 'path', 'name'])
-            ->map(fn($i) => ['id' => $i->id, 'path' => $i->path, 'name' => $i->name])
+            ->map(fn(ChurchImage $i): array => ['id' => $i->id, 'path' => $i->path, 'name' => $i->name])
             ->values()->all();
         $this->dispatch('images-updated', images: $updated);
 

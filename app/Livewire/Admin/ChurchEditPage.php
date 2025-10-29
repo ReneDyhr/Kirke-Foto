@@ -8,7 +8,7 @@ use App\Models\Church;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.admin')]
+#[Layout(name: 'layouts.admin')]
 class ChurchEditPage extends Component
 {
     public Church $church;
@@ -26,11 +26,11 @@ class ChurchEditPage extends Component
     public function mount(Church $church): void
     {
         $this->church = $church;
-        $this->seo_description = (string) ($church->seo_description ?? '');
-        $this->seo_tags = (string) ($church->seo_tags ?? '');
-        $this->drone_approval = (bool) $church->drone_approval;
-        $this->open_area = (bool) $church->open_area;
-        $this->contact_later = (bool) $church->contact_later;
+        $this->seo_description = ($church->seo_description ?? '');
+        $this->seo_tags = ($church->seo_tags ?? '');
+        $this->drone_approval = $church->drone_approval;
+        $this->open_area = $church->open_area;
+        $this->contact_later = $church->contact_later;
     }
 
     public function render(): \Illuminate\View\View
