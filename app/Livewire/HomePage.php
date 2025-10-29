@@ -147,7 +147,10 @@ class HomePage extends Component
 
         if (\count($this->churches) === 1) {
             $this->selectedChurch = \array_key_first($this->churches); // restore after resets
-            $this->selectedChurchModel = Church::findOrFail($this->selectedChurch);
+            $this->selectedChurchModel = Church::with('parish')->findOrFail($this->selectedChurch);
+        } elseif ($this->selectedChurch !== null && !isset($this->selectedChurchModel)) {
+            // Ensure selectedChurchModel is loaded when a church is selected (even if multiple churches exist)
+            $this->selectedChurchModel = Church::with('parish')->findOrFail($this->selectedChurch);
         }
     }
 
@@ -205,7 +208,7 @@ class HomePage extends Component
         if ($churchId === null) {
             return;
         }
-        $church  = Church::select('id', 'parish_id')->findOrFail($churchId);
+        $church  = Church::with('parish')->findOrFail($churchId);
         $parish  = Parish::select('id', 'deanery_id')->findOrFail($church->parish_id);
         $deanery = Deanery::select('id', 'diocese_id')->findOrFail($parish->deanery_id);
 
