@@ -10,7 +10,7 @@ RUN npm install \
     && npm run build
 
 # Stage 3: Build PHP Application
-FROM ghcr.io/ReneDyhr/Kirke-Foto:base as app-builder
+FROM ghcr.io/renedyhr/kirke-foto:base as app-builder
 
 WORKDIR /var/www/html/
 
@@ -25,7 +25,7 @@ RUN touch laravel.cron && \
     crontab laravel.cron
 
 # Stage 4: Production Image
-FROM ghcr.io/ReneDyhr/Kirke-Foto:base as production
+FROM ghcr.io/renedyhr/kirke-foto:base as production
 
 WORKDIR /var/www/html/
 

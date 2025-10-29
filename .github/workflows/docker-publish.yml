@@ -56,7 +56,7 @@ jobs:
           cache-from: type=gha,scope=project
           cache-to: type=gha,scope=project,mode=max
           tags: |
-            ghcr.io/ReneDyhr/Kirke-Foto:base
+            ghcr.io/renedyhr/kirke-foto:base
   build:
     needs: [changes, build-base]
     if: always() && (needs.build-base.result == 'success' || needs.build-base.result == 'skipped')
@@ -97,5 +97,5 @@ jobs:
           cache-from: type=gha,scope=project
           cache-to: type=gha,scope=project,mode=max
           tags: |
-            ghcr.io/ReneDyhr/Kirke-Foto:${{ env.VERSION }}
-            ghcr.io/ReneDyhr/Kirke-Foto:latest
+            ghcr.io/renedyhr/kirke-foto:${{ env.VERSION }}
+            ghcr.io/renedyhr/kirke-foto:latest
