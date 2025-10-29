@@ -48,7 +48,7 @@ class ChurchImagesPage extends Component
         }
 
         $this->validate([
-            'photos.*' => 'image|mimes:jpg,jpeg|max:40960',
+            'photos.*' => 'image|mimes:jpg,jpeg|max:102400',
         ]);
 
         DB::transaction(function (): void {
