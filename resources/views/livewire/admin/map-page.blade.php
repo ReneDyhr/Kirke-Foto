@@ -1,10 +1,12 @@
 <div class="content">
-    <div id="map">
+    <div id="map" style="height: 80vh;">
     </div>
 </div>
 @script
     <script>
-        const churches = JSON.parse('{!! json_encode($churches) !!}');
+        const kirker = JSON.parse('{!! json_encode($kirker) !!}');
+        const finished = JSON.parse('{!! json_encode($finished) !!}');
+        const contacted = JSON.parse('{!! json_encode($contacted) !!}');
         // Globals similar to your component state
         let map = null;
         let infoWindow = null;
@@ -14,7 +16,7 @@
             lat: 56.43031025601471,
             lng: 10.713182042019326
         };
-        let zoom = 7;
+        let zoom = 8;
 
         function churchInfoContent(church) {
             const parishName = church.parish || "";
@@ -58,7 +60,8 @@
             const sharedInfoWindow = infoWindow || new google.maps.InfoWindow();
             infoWindow = sharedInfoWindow;
 
-            churches.forEach(ch => {
+            // Render kirker: yellow (open_area) or red (drone_approval)
+            Object.values(kirker).forEach(ch => {
                 const lat = parseFloat(ch.latitude);
                 const lng = parseFloat(ch.longitude);
                 if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
@@ -69,8 +72,73 @@
                         lat,
                         lng
                     },
-                    icon: "/images/church-red.png",
+                    icon: ch.open_area ? "/images/church-yellow.png" : "/images/church-red.png",
                     title: ch.name || ""
+                });
+
+                marker.addListener("click", () => {
+                    sharedInfoWindow.setContent(churchInfoContent(ch));
+                    sharedInfoWindow.open({
+                        anchor: marker,
+                        map,
+                        shouldFocus: false
+                    });
+                });
+
+                markers.push(marker);
+            });
+
+            // Render finished: green icons
+            Object.values(finished).forEach(ch => {
+                const lat = parseFloat(ch.latitude);
+                const lng = parseFloat(ch.longitude);
+                if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+                const marker = new google.maps.Marker({
+                    map,
+                    position: {
+                        lat,
+                        lng
+                    },
+                    icon: "/images/church-green.png",
+                    title: ch.name || ""
+                });
+
+                marker.addListener("click", () => {
+                    sharedInfoWindow.setContent(churchInfoContent(ch));
+                    sharedInfoWindow.open({
+                        anchor: marker,
+                        map,
+                        shouldFocus: false
+                    });
+                });
+
+                markers.push(marker);
+            });
+
+            // Render contacted: blue (recent), pink (old), or black (contact_later)
+            Object.values(contacted).forEach(ch => {
+                const lat = parseFloat(ch.latitude);
+                const lng = parseFloat(ch.longitude);
+                if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+                let icon = "/images/church-blue.png";
+                if (ch.contact_later) {
+                    icon = "/images/church-black.png";
+                } else if (ch.old) {
+                    icon = "/images/church-pink.png";
+                }
+
+                const title = ch.date ? `${ch.name} - ${ch.date}` : ch.name;
+
+                const marker = new google.maps.Marker({
+                    map,
+                    position: {
+                        lat,
+                        lng
+                    },
+                    icon: icon,
+                    title: title
                 });
 
                 marker.addListener("click", () => {

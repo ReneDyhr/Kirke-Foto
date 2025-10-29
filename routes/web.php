@@ -24,16 +24,21 @@ Route::get('/images/church/{path}', [App\Http\Controllers\ChurchImageController:
 // Route::get('/login', LoginPage::class)->name('login');
 
 // Admin entry - shows login inside layout if not authenticated
-Route::get('/admin/', AdminPage::class);
+Route::get('/admin/login', App\Livewire\Admin\LoginPage::class)->name('login');
+Route::middleware('auth')->group(function (): void {
+    Route::get('/admin/', AdminPage::class);
 
-// Admin: Church edit
-Route::get('/admin/church/{church}/edit', App\Livewire\Admin\ChurchEditPage::class);
+    // Admin: Church edit
+    Route::get('/admin/church/{church}/edit', App\Livewire\Admin\ChurchEditPage::class);
 
-// Admin: Church images management
-Route::get('/admin/church/{church}/images', App\Livewire\Admin\ChurchImagesPage::class);
+    // Admin: Church images management
+    Route::get('/admin/church/{church}/images', App\Livewire\Admin\ChurchImagesPage::class);
 
-// Admin: Church communications management
-Route::get('/admin/church/{church}/communications', App\Livewire\Admin\ChurchCommunicationsPage::class);
+    // Admin: Church communications management
+    Route::get('/admin/church/{church}/communications', App\Livewire\Admin\ChurchCommunicationsPage::class);
+
+    Route::get('/admin/map', App\Livewire\Admin\MapPage::class);
+});
 
 // Route::post('/logout', function (): RedirectResponse {
 //     Auth::logout();

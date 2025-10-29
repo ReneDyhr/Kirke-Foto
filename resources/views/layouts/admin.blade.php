@@ -13,13 +13,14 @@
     <script src="https://cdn.jsdelivr.net/npm/nice-select2@2.3.1/dist/js/nice-select2.min.js"></script>
     <link href="
     https://cdn.jsdelivr.net/npm/nice-select2@2.3.1/dist/css/nice-select2.min.css
-    " rel="stylesheet">
+    "
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" rel="stylesheet" />
     <!-- Alpine.js loader that waits for Livewire to init so $wire is available -->
     <script>
-        window.deferLoadingAlpine = function (callback) {
-            window.addEventListener('livewire:init', function () {
+        window.deferLoadingAlpine = function(callback) {
+            window.addEventListener('livewire:init', function() {
                 callback();
             });
         };
@@ -45,6 +46,8 @@
                 @if (auth()->check())
                     <ul class="menu">
                         <li><a href="/admin/">Kirker</a></li>
+                        <li><a href="/admin/map">Kort</a></li>
+                        <li><a href="/admin/logout">Log ud</a></li>
                     </ul>
                 @endif
             </nav>
