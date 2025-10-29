@@ -46,6 +46,15 @@ class ContactPage extends Component
             'mathResult' => 'required|integer|in:' . ($this->mathNumber1 + $this->mathNumber2),
         ]);
 
+        // Store values before reset
+        $name = $this->name;
+        $email = $this->email;
+        $subject = $this->subject;
+        $message = $this->message;
+
         $this->reset(['name', 'email', 'subject', 'message', 'mathResult']);
+
+        $recipient = \config('mail.contact_recipient', '');
+        \Mail::to($recipient)->send(new \App\Mail\ContactMail($name, $email, $subject, $message));
     }
 }

@@ -111,4 +111,16 @@ return [
         'address' => \env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => \env('MAIL_FROM_NAME', 'Example'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Form Recipient
+    |--------------------------------------------------------------------------
+    |
+    | This option controls where contact form submissions are sent.
+    | You can override this by setting MAIL_CONTACT_RECIPIENT in your .env file.
+    |
+     */
+
+    'contact_recipient' => \env('MAIL_CONTACT_RECIPIENT', ''),
 ];
