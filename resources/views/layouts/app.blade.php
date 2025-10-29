@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/favicon.ico" />
     <title>{{ $title ?? 'Kirke-Foto' }} - Kirke-Foto</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6YYJDM2PE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-P6YYJDM2PE');
+    </script>
 
     @php
         $ogTitle = $ogTitle ?? 'Forside - Kirke-Foto';
