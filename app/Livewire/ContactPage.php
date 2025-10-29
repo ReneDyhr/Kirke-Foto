@@ -31,8 +31,24 @@ class ContactPage extends Component
 
     public function render(): \Illuminate\View\View
     {
+        // Build SEO data
+        $ogTitle = 'Kontakt - Kirke-Foto';
+        $ogDescription = 'Få kontakt til Kirke-Foto.';
+        $ogImage = 'https://kirke-foto.dk/me_2.jpeg';
+        $metaDescription = 'Vil du gerne i kontakt med Kirke-Foto? Så har du her muligheden for at sende en besked.';
+        $metaKeywords = 'kirke, foto, galleri, billeder, kirke-foto, kirkefoto, billed, kirke-galleri, kirkegalleri, dansk, danmark, kontakt, kontakt rené dyhr, kontakt kirke-foto';
+        $ogUrl = 'https://kirke-foto.dk/kontakt';
+
         return \view('livewire.contact-page')
-            ->layout('layouts.app')
+            ->layout('layouts.app', [
+                'ogTitle' => $ogTitle,
+                'ogType' => 'website',
+                'ogDescription' => $ogDescription,
+                'ogImage' => $ogImage,
+                'ogUrl' => $ogUrl,
+                'metaDescription' => $metaDescription,
+                'metaKeywords' => $metaKeywords,
+            ])
             ->title('Kontakt');
     }
 

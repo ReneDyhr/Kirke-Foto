@@ -32,8 +32,24 @@ class MapPage extends Component
 
     public function render(): \Illuminate\View\View
     {
+        // Build SEO data
+        $ogTitle = 'Kort - Kirke-Foto';
+        $ogDescription = 'Her kan du se et Danmarks kort over de kirker der er blevet fotograferet til Kirke-Foto.dk og nemt klikke ind og se billederne.';
+        $ogImage = 'https://kirke-foto.dk/images/church/high_P4Ai1Hv65iGQfrnPlXO70XP8TBch4wtcwlrL1DQ3.jpg';
+        $metaDescription = 'Se et Danmarks kort over kirker der ligger på Kirke-Foto.dk';
+        $metaKeywords = 'kirke, foto, galleri, billeder, kirke-foto, kirkefoto, billed, kirke-galleri, kirkegalleri, dansk, danmark, kort, danmarkskort, kort over kirker';
+        $ogUrl = 'https://kirke-foto.dk/kort';
+
         return \view('livewire.map-page')
-            ->layout('layouts.app')
+            ->layout('layouts.app', [
+                'ogTitle' => $ogTitle,
+                'ogType' => 'website',
+                'ogDescription' => $ogDescription,
+                'ogImage' => $ogImage,
+                'ogUrl' => $ogUrl,
+                'metaDescription' => $metaDescription,
+                'metaKeywords' => $metaKeywords,
+            ])
             ->title('Kort');
     }
 }
