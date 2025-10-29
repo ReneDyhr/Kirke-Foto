@@ -123,7 +123,7 @@ class ChurchImagesPage extends Component
 
         // Send updated images back to the browser so Alpine can refresh
         $updated = $this->church->images()->orderBy('sorting')->get(['id', 'path', 'name'])
-            ->map(fn ($i) => ['id' => $i->id, 'path' => $i->path, 'name' => $i->name])
+            ->map(fn($i) => ['id' => $i->id, 'path' => $i->path, 'name' => $i->name])
             ->values()->all();
         $this->dispatch('images-updated', images: $updated);
 
