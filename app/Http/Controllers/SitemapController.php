@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Church;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
@@ -23,8 +23,10 @@ class SitemapController extends Controller
             })
             ->with('parish:id,url')
             ->with([
-                'images' => static function (HasMany $q): void {
+                'images' => static function (Relation $q): mixed {
                     $q->whereNull('deleted_at')->select(['id', 'church_id', 'path', 'updated_at']);
+
+                    return $q;
                 },
             ])
             ->select(['id', 'parish_id', 'url'])
