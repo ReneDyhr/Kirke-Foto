@@ -33,9 +33,14 @@ COPY --from=app-builder /var/www/html/ /var/www/html/
 
 COPY docker/production/supervisor.conf /etc/supervisor/conf.d/worker.conf
 
-RUN mkdir /var/www/.npm
+ENV APP_ENV=production \
+    APP_DEBUG=false \
+    LOG_LEVEL=info
 
-RUN chown -R www-data:www-data /var/www/
+RUN mkdir -p /var/www && \
+    chown -R www-data:www-data /var/www/ && \
+    # strip build-time tooling that is not needed at runtime
+    rm -f /usr/local/bin/composer || true
 
 USER www-data
 
