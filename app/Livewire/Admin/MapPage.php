@@ -26,11 +26,11 @@ class MapPage extends Component
         // @phpstan-ignore assign.propertyType
         $this->finished = Church::with(['parish.deanery.diocese'])
             ->whereExists(function (Builder $query): void {
-            $query->select(DB::raw(1))
-                ->from('church_images')
-                ->whereColumn('church_images.church_id', 'churches.id')
-                ->where('church_images.name', 'like', '%DJI%');
-        })
+                $query->select(DB::raw(1))
+                    ->from('church_images')
+                    ->whereColumn('church_images.church_id', 'churches.id')
+                    ->where('church_images.name', 'like', '%DJI%');
+            })
             ->get()
             ->map(function (Church $church): array {
                 return $this->churchToArray($church);
@@ -78,9 +78,9 @@ class MapPage extends Component
         // @phpstan-ignore assign.propertyType
         $this->kirker = Church::with(['parish.deanery.diocese'])
             ->where(function (\Illuminate\Database\Eloquent\Builder $query): void {
-            $query->where('drone_approval', 1)
-                ->orWhere('open_area', 1);
-        })
+                $query->where('drone_approval', 1)
+                    ->orWhere('open_area', 1);
+            })
             ->whereNotExists(function (Builder $query): void {
                 $query->select(DB::raw(1))
                     ->from('church_images')

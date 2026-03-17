@@ -20,18 +20,18 @@ class MapPage extends Component
             ->orderBy('name')
             ->get()
             ->map(function (Church $church): array {
-            return [
-                'name' => $church->name,
-                'id' => $church->id,
-                'url' => $church->url,
-                'latitude' => $church->latitude,
-                'longitude' => $church->longitude,
-                'parish' => $church->parish->name ?? '',
-                'parish_url' => $church->parish->url ?? '',
-                'deanery' => $church->parish->deanery->name ?? '',
-                'diocese' => $church->parish->deanery->diocese->name ?? '',
-            ];
-        })->toArray();
+                return [
+                    'name' => $church->name,
+                    'id' => $church->id,
+                    'url' => $church->url,
+                    'latitude' => $church->latitude,
+                    'longitude' => $church->longitude,
+                    'parish' => $church->parish->name ?? '',
+                    'parish_url' => $church->parish->url ?? '',
+                    'deanery' => $church->parish->deanery->name ?? '',
+                    'diocese' => $church->parish->deanery->diocese->name ?? '',
+                ];
+            })->toArray();
     }
 
     public function render(): \Illuminate\View\View
