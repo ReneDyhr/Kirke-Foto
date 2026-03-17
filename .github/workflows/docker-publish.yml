@@ -9,7 +9,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      base: ${{ steps.filter.outputs.Dockerfile.base.production }}
+      base_changed: ${{ steps.filter.outputs.base_changed }}
     steps:
       - uses: actions/checkout@v3
 
@@ -17,13 +17,14 @@ jobs:
         id: filter
         with:
           filters: |
-            Dockerfile.base.production:
+            base_changed:
               - 'Dockerfile.base.production'
+              - '.github/workflows/docker-publish.yml'
 
   build-base:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.base == 'true' }}
+    if: ${{ needs.changes.outputs.base_changed == 'true' }}
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
@@ -35,8 +36,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache Docker layers
         uses: actions/cache@v3
@@ -51,7 +52,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.base.production
-          platforms: linux/amd64, linux/arm64/v8
+          platforms: linux/amd64
           push: true
           cache-from: type=gha,scope=project
           cache-to: type=gha,scope=project,mode=max
@@ -72,8 +73,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set version
         id: set_version
@@ -92,7 +93,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.production
-          platforms: linux/amd64, linux/arm64/v8
+          platforms: linux/amd64
           push: true
           cache-from: type=gha,scope=project
           cache-to: type=gha,scope=project,mode=max
