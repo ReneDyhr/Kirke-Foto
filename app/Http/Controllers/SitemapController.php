@@ -23,10 +23,8 @@ class SitemapController extends Controller
             })
             ->with('parish:id,url')
             ->with([
-                'images' => static function (Relation $q): mixed {
+                'images' => static function (Relation $q): void {
                     $q->whereNull('deleted_at')->select(['id', 'church_id', 'path', 'updated_at']);
-
-                    return $q;
                 },
             ])
             ->select(['id', 'parish_id', 'url'])

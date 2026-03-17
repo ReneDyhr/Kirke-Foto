@@ -28,6 +28,11 @@ parameters:
     # This is set to false to allow certain php-doc constructs such as 'class-string' to be used
     reportMaybesInPropertyPhpDocTypes: false
 
+    ignoreErrors:
+        -
+            message: '#Missing native return typehint void#'
+            path: bootstrap/app.php
+
     # Rules from https://github.com/shipmonk-rnd/phpstan-rules
     shipmonkRules:
         allowComparingOnlyComparableTypes:
