@@ -24,7 +24,8 @@ class MapPage extends Component
     {
         // $finished: Churches with images containing "DJI" in the name
         // @phpstan-ignore assign.propertyType
-        $this->finished = Church::whereExists(function (Builder $query): void {
+        $this->finished = Church::with(['parish.deanery.diocese'])
+            ->whereExists(function (Builder $query): void {
             $query->select(DB::raw(1))
                 ->from('church_images')
                 ->whereColumn('church_images.church_id', 'churches.id')
@@ -38,7 +39,8 @@ class MapPage extends Component
             ->toArray();
 
         // $contacted: Churches that have been contacted, with drone_approval = 0 and open_area = 0
-        $contactedChurches = Church::where('drone_approval', 0)
+        $contactedChurches = Church::with(['parish.deanery.diocese'])
+            ->where('drone_approval', 0)
             ->where('open_area', 0)
             ->whereExists(function (Builder $query): void {
                 $query->select(DB::raw(1))
@@ -74,7 +76,8 @@ class MapPage extends Component
 
         // $kirker: Churches with (drone_approval = 1 OR open_area = 1) AND no "DJI" images
         // @phpstan-ignore assign.propertyType
-        $this->kirker = Church::where(function (\Illuminate\Database\Eloquent\Builder $query): void {
+        $this->kirker = Church::with(['parish.deanery.diocese'])
+            ->where(function (\Illuminate\Database\Eloquent\Builder $query): void {
             $query->where('drone_approval', 1)
                 ->orWhere('open_area', 1);
         })

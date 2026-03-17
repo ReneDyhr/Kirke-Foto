@@ -15,7 +15,11 @@ class MapPage extends Component
     public function mount(): void
     {
         // @phpstan-ignore assign.propertyType
-        $this->churches  = Church::has('images', '>', 0)->orderBy('name')->get()->map(function (Church $church): array {
+        $this->churches  = Church::with(['parish.deanery.diocese'])
+            ->has('images', '>', 0)
+            ->orderBy('name')
+            ->get()
+            ->map(function (Church $church): array {
             return [
                 'name' => $church->name,
                 'id' => $church->id,
