@@ -42,6 +42,9 @@ return [
     // @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/#send_default_pii
     'send_default_pii' => \env('SENTRY_SEND_DEFAULT_PII', false),
 
+    // Use Laravel's client IP (trusted proxies) instead of raw REMOTE_ADDR for user + request env
+    'before_send' => [App\Sentry\FixClientIpBeforeSend::class, 'handle'],
+    'before_send_transaction' => [App\Sentry\FixClientIpBeforeSend::class, 'handle'],
     // @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/#ignore_exceptions
     // 'ignore_exceptions' => [],
 
