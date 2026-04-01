@@ -15,6 +15,8 @@ return Application::configure(basePath: \dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->prepend(\App\Http\Middleware\UseCloudflareConnectingIp::class);
+
         $middleware->trustProxies(
             at: '10.42.0.0/16',
             headers: SymfonyRequest::HEADER_X_FORWARDED_FOR |
