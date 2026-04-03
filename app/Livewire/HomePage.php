@@ -35,13 +35,18 @@ class HomePage extends Component
     public array $latestChurches = [];
 
     // ── current selections ───────────────────────────────────
-    public ?int $selectedDiocese = null;
+    // Untyped: Nice Select 2 can sync an array; Livewire assigns before updated* runs (?int would TypeError).
+    /** @var int|null */
+    public $selectedDiocese = null;
 
-    public ?int $selectedDeanery = null;
+    /** @var int|null */
+    public $selectedDeanery = null;
 
-    public ?int $selectedParish  = null;
+    /** @var int|null */
+    public $selectedParish = null;
 
-    public ?int $selectedChurch  = null;
+    /** @var int|null */
+    public $selectedChurch = null;
 
     public Church $selectedChurchModel;
 
@@ -74,23 +79,31 @@ class HomePage extends Component
     }
 
     // ── watchers ─────────────────────────────────────────────
-    public function updatedSelectedDiocese(?int $id): void
+    public function updatedSelectedDiocese(mixed $value): void
     {
+        $id = $this->normalizeNullableId($value);
+        $this->selectedDiocese = $id;
         $this->cascadeFromDiocese($id);
     }
 
-    public function updatedSelectedDeanery(?int $id): void
+    public function updatedSelectedDeanery(mixed $value): void
     {
+        $id = $this->normalizeNullableId($value);
+        $this->selectedDeanery = $id;
         $this->cascadeFromDeanery($id);
     }
 
-    public function updatedSelectedParish(?int $id): void
+    public function updatedSelectedParish(mixed $value): void
     {
+        $id = $this->normalizeNullableId($value);
+        $this->selectedParish = $id;
         $this->cascadeFromParish($id);
     }
 
-    public function updatedSelectedChurch(?int $id): void
+    public function updatedSelectedChurch(mixed $value): void
     {
+        $id = $this->normalizeNullableId($value);
+        $this->selectedChurch = $id;
         $this->cascadeFromChurch($id);
     }
 
@@ -144,15 +157,15 @@ class HomePage extends Component
         }
 
         if (\count($this->deaneries) === 1) {
-            $this->selectedDeanery = \array_key_first($this->deaneries); // restore after resets
+            $this->selectedDeanery = (int) \array_key_first($this->deaneries); // restore after resets
         }
 
         if (\count($this->parishes) === 1) {
-            $this->selectedParish = \array_key_first($this->parishes); // restore after resets
+            $this->selectedParish = (int) \array_key_first($this->parishes); // restore after resets
         }
 
         if (\count($this->churches) === 1) {
-            $this->selectedChurch = \array_key_first($this->churches); // restore after resets
+            $this->selectedChurch = (int) \array_key_first($this->churches); // restore after resets
             $this->selectedChurchModel = Church::with('parish')->findOrFail($this->selectedChurch);
         } elseif ($this->selectedChurch !== null && !isset($this->selectedChurchModel)) {
             // Ensure selectedChurchModel is loaded when a church is selected (even if multiple churches exist)
@@ -227,6 +240,35 @@ class HomePage extends Component
     }
 
     // ── utilities ───────────────────────────────────────────
+    private function normalizeNullableId(mixed $value): ?int
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        if (\is_array($value)) {
+            if ($value === []) {
+                return null;
+            }
+
+            return $this->normalizeNullableId(\reset($value));
+        }
+
+        if (\is_int($value)) {
+            return $value;
+        }
+
+        if (\is_float($value)) {
+            return (int) $value;
+        }
+
+        if (\is_string($value) && is_numeric($value)) {
+            return (int) $value;
+        }
+
+        return null;
+    }
+
     private function restoreAllBelow(): void
     {
         $this->dioceses = Diocese::has('deaneries.parishes.churches.images', '>', 0)->orderBy('name')->pluck('name', 'id')->all();
