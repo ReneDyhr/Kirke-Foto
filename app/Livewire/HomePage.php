@@ -36,17 +36,17 @@ class HomePage extends Component
 
     // ── current selections ───────────────────────────────────
     // Untyped: Nice Select 2 can sync an array; Livewire assigns before updated* runs (?int would TypeError).
-    /** @var int|null */
-    public $selectedDiocese = null;
+    /** @var null|int */
+    public $selectedDiocese;
 
-    /** @var int|null */
-    public $selectedDeanery = null;
+    /** @var null|int */
+    public $selectedDeanery;
 
-    /** @var int|null */
-    public $selectedParish = null;
+    /** @var null|int */
+    public $selectedParish;
 
-    /** @var int|null */
-    public $selectedChurch = null;
+    /** @var null|int */
+    public $selectedChurch;
 
     public Church $selectedChurchModel;
 
@@ -262,7 +262,7 @@ class HomePage extends Component
             return (int) $value;
         }
 
-        if (\is_string($value) && is_numeric($value)) {
+        if (\is_string($value) && \is_numeric($value)) {
             return (int) $value;
         }
 
