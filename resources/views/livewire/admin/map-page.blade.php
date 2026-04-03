@@ -1,5 +1,36 @@
 <div class="content">
-    <div id="map" style="height: 80vh;">
+    <div class="map-page-wrap">
+        <aside class="map-page-legend" aria-label="Forklaring af markeringer">
+            <p class="map-page-legend-title">Markeringer</p>
+            <ul>
+                <li>
+                    <img src="/images/church-yellow.png" alt="" width="20" height="20" />
+                    <span>Gul – åbent område</span>
+                </li>
+                <li>
+                    <img src="/images/church-red.png" alt="" width="20" height="20" />
+                    <span>Rød – dronegodkendelse</span>
+                </li>
+                <li>
+                    <img src="/images/church-green.png" alt="" width="20" height="20" />
+                    <span>Grøn – med DJI-billeder</span>
+                </li>
+                <li>
+                    <img src="/images/church-blue.png" alt="" width="20" height="20" />
+                    <span>Blå – kontaktet for nylig</span>
+                </li>
+                <li>
+                    <img src="/images/church-pink.png" alt="" width="20" height="20" />
+                    <span>Lyserød – kontakt for over 30 dage siden</span>
+                </li>
+                <li>
+                    <img src="/images/church-black.png" alt="" width="20" height="20" />
+                    <span>Sort – kontakt senere</span>
+                </li>
+            </ul>
+        </aside>
+        <div id="map" style="height: 80vh;">
+        </div>
     </div>
 </div>
 @script
