@@ -803,6 +803,17 @@ footer {
     img {
         flex-shrink: 0;
     }
+
+    .map-page-legend-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #6b7280;
+        opacity: 0.45;
+        flex-shrink: 0;
+        box-shadow: 0 0 0 1px rgba(156, 163, 175, 0.45);
+    }
 }
 
 #map {

@@ -20,6 +20,9 @@ class MapPage extends Component
     /** @var list<array{name: string, id: int, url: string, latitude: float, longitude: float, parish: string, parish_url: string, deanery: string, diocese: string, date: null|string, old: bool, contact_later: bool}> */
     public array $contacted = [];
 
+    /** @var list<array{name: string, id: int, url: string, latitude: float, longitude: float, parish: string, parish_url: string, deanery: string, diocese: string, open_area: bool, drone_approval: bool}> */
+    public array $fadedChurches = [];
+
     public function mount(): void
     {
         // $finished: Churches with images containing "DJI" in the name
@@ -88,6 +91,30 @@ class MapPage extends Component
                     ->where('church_images.name', 'like', '%DJI%');
             })
             ->get()
+            ->map(function (Church $church): array {
+                return $this->churchToArray($church);
+            })
+            ->values()
+            ->toArray();
+
+        $shownIds = \collect($this->kirker)
+            ->pluck('id')
+            ->merge(\collect($this->finished)->pluck('id'))
+            ->merge(\collect($this->contacted)->pluck('id'))
+            ->unique()
+            ->values()
+            ->all();
+
+        $fadedQuery = Church::with(['parish.deanery.diocese'])
+            ->whereNotNull('latitude')
+            ->whereNotNull('longitude');
+
+        if ($shownIds !== []) {
+            $fadedQuery->whereNotIn('id', $shownIds);
+        }
+
+        // @phpstan-ignore assign.propertyType
+        $this->fadedChurches = $fadedQuery->get()
             ->map(function (Church $church): array {
                 return $this->churchToArray($church);
             })

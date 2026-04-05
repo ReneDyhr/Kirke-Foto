@@ -27,6 +27,10 @@
                     <img src="/images/church-black.png" alt="" width="20" height="20" />
                     <span>Sort – kontakt senere</span>
                 </li>
+                <li class="map-page-legend-faded">
+                    <span class="map-page-legend-dot" aria-hidden="true"></span>
+                    <span>Grå prik – øvrige kirker (ikke i kategorierne ovenfor)</span>
+                </li>
             </ul>
         </aside>
         <div id="map" style="height: 80vh;">
@@ -38,6 +42,7 @@
         const kirker = JSON.parse('{!! json_encode($kirker) !!}');
         const finished = JSON.parse('{!! json_encode($finished) !!}');
         const contacted = JSON.parse('{!! json_encode($contacted) !!}');
+        const fadedChurches = JSON.parse('{!! json_encode($fadedChurches) !!}');
         // Globals similar to your component state
         let map = null;
         let infoWindow = null;
@@ -54,19 +59,23 @@
             const deaneryName = church.deanery || "";
             const dioceseName = church.diocese || "";
             const parishUrl = church.parish_url || "";
-            const churchUrl = church.url || "";
 
             const crumbs = [parishName, deaneryName, dioceseName].filter(Boolean).join(" - ");
+
+            const sognLabel = parishName ? `Gå til ${parishName} via sogn.dk` : "Gå til sogn.dk";
+            const sognBlock = parishUrl ?
+                `<a class="church-button" href="https://sogn.dk/${encodeURIComponent(parishUrl)}" target="_blank" rel="noreferrer">
+            <button type="button" class="btn btn-sm btn-primary">
+                ${escapeHtml(sognLabel)}&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </button>
+            </a>` :
+                "";
 
             return `
         <div id="content">
             <h1 class="church-header">${escapeHtml(church.name || "")}</h1>
             <span class="church-breadcrumb">${escapeHtml(crumbs)}</span>
-            <a class="church-button" href="/kirke/${encodeURIComponent(parishUrl)}/${encodeURIComponent(churchUrl)}">
-            <button class="btn btn-sm btn-primary">
-                Gå til ${escapeHtml(church.name || "")}&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
-            </button>
-            </a>
+            ${sognBlock}
         </div>
         `;
         }
@@ -91,6 +100,46 @@
             const sharedInfoWindow = infoWindow || new google.maps.InfoWindow();
             infoWindow = sharedInfoWindow;
 
+            const prominentZIndex = 100;
+            const fadedMarkerIcon = {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: "#6b7280",
+                fillOpacity: 0.4,
+                strokeColor: "#9ca3af",
+                strokeOpacity: 0.35,
+                strokeWeight: 1,
+                scale: 4,
+            };
+
+            // Faded dots: churches not in any category above (draw first so prominent markers stack on top)
+            Object.values(fadedChurches).forEach(ch => {
+                const lat = parseFloat(ch.latitude);
+                const lng = parseFloat(ch.longitude);
+                if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+                const marker = new google.maps.Marker({
+                    map,
+                    position: {
+                        lat,
+                        lng
+                    },
+                    icon: fadedMarkerIcon,
+                    zIndex: 1,
+                    title: ch.name || ""
+                });
+
+                marker.addListener("click", () => {
+                    sharedInfoWindow.setContent(churchInfoContent(ch));
+                    sharedInfoWindow.open({
+                        anchor: marker,
+                        map,
+                        shouldFocus: false
+                    });
+                });
+
+                markers.push(marker);
+            });
+
             // Render kirker: yellow (open_area) or red (drone_approval)
             Object.values(kirker).forEach(ch => {
                 const lat = parseFloat(ch.latitude);
@@ -104,6 +153,7 @@
                         lng
                     },
                     icon: ch.open_area ? "/images/church-yellow.png" : "/images/church-red.png",
+                    zIndex: prominentZIndex,
                     title: ch.name || ""
                 });
 
@@ -132,6 +182,7 @@
                         lng
                     },
                     icon: "/images/church-green.png",
+                    zIndex: prominentZIndex,
                     title: ch.name || ""
                 });
 
@@ -169,6 +220,7 @@
                         lng
                     },
                     icon: icon,
+                    zIndex: prominentZIndex,
                     title: title
                 });
 
