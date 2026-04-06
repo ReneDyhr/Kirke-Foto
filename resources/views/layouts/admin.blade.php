@@ -46,6 +46,7 @@
                 @if (auth()->check())
                     <ul class="menu">
                         <li><a href="/admin/">Kirker</a></li>
+                        <li><a href="/admin/outreach-mail">Mail-skabelon</a></li>
                         <li><a href="/admin/map">Kort</a></li>
                         <li><a href="/admin/logout">Log ud</a></li>
                     </ul>
