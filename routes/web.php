@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function (): void {
     // Admin: Church communications management
     Route::get('/admin/church/{church}/communications', App\Livewire\Admin\ChurchCommunicationsPage::class);
 
+    Route::get('/admin/outreach-mail', App\Livewire\Admin\OutreachMailPage::class);
+
     Route::get('/admin/map', App\Livewire\Admin\MapPage::class);
 });
 

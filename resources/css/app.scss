@@ -831,3 +831,217 @@ footer {
     text-align: center;
     top: 2px;
 }
+
+/* Admin: mail-skabelon — vælg kirker */
+.outreach-mail-page__title {
+    margin: 0 0 1.25rem;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.outreach-mail-pick__title {
+    margin: 0 0 0.35rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.outreach-mail-pick__lead {
+    margin: 0 0 1.1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.68);
+    max-width: 40rem;
+}
+
+.outreach-mail-pick__panel {
+    background: #f4f5f4;
+    border-radius: 0.5rem;
+    padding: 1.15rem 1.2rem 1.1rem;
+    border: 0;
+}
+
+.outreach-mail-pick__section {
+    margin-bottom: 1.25rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.outreach-mail-pick__subsection-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0 0 0.55rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    &--tight {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.outreach-mail-pick__hint {
+    margin: -0.25rem 0 0.5rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.outreach-mail-pick__label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+}
+
+.outreach-mail-pick__list {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0.5rem 0 0;
+    background: #fff;
+    border-radius: 0.35rem;
+    border: 0;
+    overflow: hidden;
+
+    &--flush {
+        margin-top: 0;
+    }
+
+    &--selected {
+        margin-top: 0.35rem;
+    }
+}
+
+.outreach-mail-pick__list>li {
+    margin-top: 0 !important;
+}
+
+.outreach-mail-pick__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+    &:last-child {
+        border-bottom: 0;
+    }
+}
+
+.outreach-mail-pick__row--top {
+    align-items: flex-start;
+}
+
+.outreach-mail-pick__church-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.outreach-mail-pick__meta {
+    font-size: 0.8125rem;
+    color: rgba(0, 0, 0, 0.55);
+    margin-top: 0.2rem;
+    line-height: 1.35;
+}
+
+.outreach-mail-pick__empty {
+    margin: 0.35rem 0 0;
+    padding: 0.9rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: rgba(0, 0, 0, 0.55);
+    background: #fafafa;
+    border-radius: 0.35rem;
+    border: 0;
+    text-align: center;
+}
+
+.outreach-mail-pick__fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+}
+
+.outreach-mail-preview__title {
+    margin: 0 0 0.35rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.outreach-mail-preview__lead {
+    margin: 0 0 1.1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.68);
+    max-width: 40rem;
+}
+
+.outreach-mail-preview__panel {
+    background: #f4f5f4;
+    border-radius: 0.5rem;
+    padding: 1.15rem 1.2rem 1rem;
+    border: 0;
+}
+
+.outreach-mail-preview__block {
+    margin-bottom: 1.15rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.outreach-mail-preview__label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.45rem;
+}
+
+.outreach-mail-preview__label {
+    font-weight: 600;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.outreach-mail-preview__textarea {
+    font-family: inherit;
+    resize: vertical;
+    min-height: 3.25rem;
+    line-height: 1.55;
+    font-size: 0.95rem;
+
+    &--body {
+        min-height: 16rem;
+    }
+}
+
+.outreach-mail-register__title {
+    margin: 0 0 0.35rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.outreach-mail-register__panel {
+    margin-top: 0.75rem;
+    background: #f4f5f4;
+    border-radius: 0.5rem;
+    padding: 1.1rem 1.2rem 1.15rem;
+    border: 0;
+}
+
+.outreach-mail-register__lead {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.68);
+}
