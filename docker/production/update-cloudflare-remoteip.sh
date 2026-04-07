@@ -19,5 +19,7 @@ trap 'rm -f "$tmp"' EXIT
   curl -fsS "$V6_URL" | awk 'NF { print "RemoteIPInternalProxy " $0 }'
 } >"$tmp"
 
+# mktemp uses 0600; Apache must read this as www-data.
+chmod 644 "$tmp"
 mv "$tmp" "$OUT"
 trap - EXIT
