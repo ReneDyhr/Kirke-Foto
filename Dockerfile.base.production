@@ -10,7 +10,6 @@ RUN apt update \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) gd \
     && a2enmod rewrite remoteip \
-    && a2enconf remoteip \
     && apt purge -y --auto-remove libonig-dev libxml2-dev \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -20,6 +19,7 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 COPY docker/production/apache-remoteip.conf /etc/apache2/conf-available/remoteip.conf
+RUN a2enconf remoteip
 
 # Copy Composer from official Composer image
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
