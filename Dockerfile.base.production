@@ -19,6 +19,10 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 COPY docker/production/apache-remoteip.conf /etc/apache2/conf-available/remoteip.conf
+COPY docker/production/apache-remoteip-cloudflare.conf /etc/apache2/conf-available/remoteip-cloudflare.conf
+COPY docker/production/update-cloudflare-remoteip.sh /usr/local/bin/update-cloudflare-remoteip.sh
+RUN chmod +x /usr/local/bin/update-cloudflare-remoteip.sh \
+    && /usr/local/bin/update-cloudflare-remoteip.sh /etc/apache2/conf-available/remoteip-cloudflare.conf
 RUN a2enconf remoteip
 
 # Copy Composer from official Composer image
