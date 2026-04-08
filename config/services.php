@@ -40,4 +40,11 @@ return [
             'support' => \env('SLACK_CHANNEL_SUPPORT'),
         ],
     ],
+
+    'fastmail' => [
+        'token' => \env('FASTMAIL_API_TOKEN'),
+        'session_url' => \env('FASTMAIL_JMAP_SESSION_URL', 'https://api.fastmail.com/jmap/session'),
+        'api_url' => \env('FASTMAIL_JMAP_API_URL', 'https://api.fastmail.com/jmap/api'),
+        'from_email' => \env('FASTMAIL_FROM_EMAIL'),
+    ],
 ];
