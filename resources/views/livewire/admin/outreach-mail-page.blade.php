@@ -178,23 +178,36 @@
                     <h2 class="outreach-mail-register__title">Registrer kommunikation</h2>
 
                     <div class="outreach-mail-register__panel">
-                        <p class="outreach-mail-register__lead">Gemmer én loglinje pr. valgt kirke (som på
-                            kommunikationssiden). Brug knappen, når mailen er sendt.</p>
+                        <p class="outreach-mail-register__lead">Opret en kladde direkte i FastMail og gem automatisk én
+                            loglinje pr. valgt kirke. Du kan stadig registrere manuelt efter afsendelse.</p>
 
                         <div class="form-group">
                             <label for="sent_to">Sendt til (valgfrit)</label>
                             <input id="sent_to" type="text" wire:model="sentTo" class="form-control"
-                                placeholder="fx 9137@SOGN.DK — tom = fuld beskedtekst gemmes" />
+                                placeholder="fx 9137@SOGN.DK" />
                         </div>
 
-                        <button type="button" class="btn btn-primary" wire:click="registerCommunication"
+                        <button type="button" class="btn btn-primary" wire:click="createFastmailDraft"
                             wire:loading.attr="disabled">
-                            <span wire:loading.remove wire:target="registerCommunication"><i class="fa fa-inbox"></i>
-                                Registrer kommunikation</span>
-                            <span wire:loading wire:target="registerCommunication">Gemmer…</span>
+                            <span wire:loading.remove wire:target="createFastmailDraft"><i class="fa fa-envelope"></i>
+                                Opret FastMail-kladde + registrer</span>
+                            <span wire:loading wire:target="createFastmailDraft">Opretter kladde…</span>
                         </button>
 
+                        <div style="margin-top: 1rem;">
+                            <button type="button" class="btn btn-primary" wire:click="registerCommunication"
+                                wire:loading.attr="disabled">
+                                <span wire:loading.remove wire:target="registerCommunication"><i
+                                        class="fa fa-inbox"></i>
+                                    Registrer kommunikation</span>
+                                <span wire:loading wire:target="registerCommunication">Gemmer…</span>
+                            </button>
+                        </div>
+
                         @error('selectedChurchIds')
+                            <div class="error" style="margin-top: 0.75rem;">{{ $message }}</div>
+                        @enderror
+                        @error('sentTo')
                             <div class="error" style="margin-top: 0.75rem;">{{ $message }}</div>
                         @enderror
                     </div>
