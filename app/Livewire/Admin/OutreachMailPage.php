@@ -7,6 +7,7 @@ namespace App\Livewire\Admin;
 use App\Models\Church;
 use App\Models\ChurchCommunication;
 use App\Models\Parish;
+use App\Services\FastmailDraftService;
 use App\Support\DanishListFormatter;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Layout;
@@ -65,17 +66,42 @@ class OutreachMailPage extends Component
         $recipient = \trim($this->sentTo);
         $message = $recipient !== '' ? 'Skrevet til ' . $recipient : $body;
 
-        foreach ($this->selectedChurchIds as $churchId) {
-            ChurchCommunication::create([
-                'church_id' => $churchId,
-                'subject' => $subject,
-                'message' => $message,
-                'sent_at' => \now(),
-            ]);
+        $count = $this->storeCommunicationEntries($subject, $message);
+        $this->dispatch('notify', message: 'Kommunikation registreret for ' . $count . ' ' . ($count === 1 ? 'kirke' : 'kirker') . '.');
+    }
+
+    public function createFastmailDraft(): void
+    {
+        $this->validate([
+            'selectedChurchIds' => 'required|array|min:1',
+            'selectedChurchIds.*' => 'integer|exists:churches,id',
+            'sentTo' => 'required|email',
+        ], [
+            'selectedChurchIds.required' => 'Vælg mindst én kirke.',
+            'selectedChurchIds.min' => 'Vælg mindst én kirke.',
+            'sentTo.required' => 'Indtast en modtageradresse.',
+            'sentTo.email' => 'Indtast en gyldig e-mailadresse.',
+        ]);
+
+        $subject = $this->buildSubject();
+        $body = $this->buildBody();
+
+        if ($subject === '' || $body === '') {
+            return;
         }
 
-        $count = \count($this->selectedChurchIds);
-        $this->dispatch('notify', message: 'Kommunikation registreret for ' . $count . ' ' . ($count === 1 ? 'kirke' : 'kirker') . '.');
+        $recipient = \trim($this->sentTo);
+
+        try {
+            $draftId = \app(FastmailDraftService::class)->createDraft($subject, $body, [$recipient]);
+        } catch (\Throwable) {
+            $this->dispatch('notify', message: 'Kunne ikke oprette kladde i FastMail. Kontrollér opsætning og prøv igen.');
+
+            return;
+        }
+
+        $count = $this->storeCommunicationEntries($subject, 'FastMail kladde oprettet til ' . $recipient . ' (id: ' . $draftId . ')');
+        $this->dispatch('notify', message: 'FastMail-kladde oprettet og kommunikation gemt for ' . $count . ' ' . ($count === 1 ? 'kirke' : 'kirker') . '.');
     }
 
     public function render(): \Illuminate\View\View
@@ -178,6 +204,20 @@ class OutreachMailPage extends Component
         );
 
         return DanishListFormatter::formatDanishAndChurchList($names);
+    }
+
+    private function storeCommunicationEntries(string $subject, string $message): int
+    {
+        foreach ($this->selectedChurchIds as $churchId) {
+            ChurchCommunication::create([
+                'church_id' => $churchId,
+                'subject' => $subject,
+                'message' => $message,
+                'sent_at' => \now(),
+            ]);
+        }
+
+        return \count($this->selectedChurchIds);
     }
 
     /**
