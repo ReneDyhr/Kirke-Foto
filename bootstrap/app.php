@@ -19,10 +19,10 @@ return Application::configure(basePath: \dirname(__DIR__))
 
         $middleware->trustProxies(
             at: '10.42.0.0/16',
-            headers: SymfonyRequest::HEADER_X_FORWARDED_FOR |
-                     SymfonyRequest::HEADER_X_FORWARDED_HOST |
-                     SymfonyRequest::HEADER_X_FORWARDED_PORT |
-                     SymfonyRequest::HEADER_X_FORWARDED_PROTO,
+            headers: SymfonyRequest::HEADER_X_FORWARDED_FOR
+                     | SymfonyRequest::HEADER_X_FORWARDED_HOST
+                     | SymfonyRequest::HEADER_X_FORWARDED_PORT
+                     | SymfonyRequest::HEADER_X_FORWARDED_PROTO,
         );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
