@@ -18,7 +18,7 @@ return Application::configure(basePath: \dirname(__DIR__))
         $middleware->prepend(App\Http\Middleware\UseCloudflareConnectingIp::class);
 
         $middleware->trustProxies(
-            at: '10.42.0.0/16',
+            at: '*',
             headers: SymfonyRequest::HEADER_X_FORWARDED_FOR
                      | SymfonyRequest::HEADER_X_FORWARDED_HOST
                      | SymfonyRequest::HEADER_X_FORWARDED_PORT
