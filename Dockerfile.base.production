@@ -20,6 +20,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
 COPY docker/production/apache-remoteip.conf /etc/apache2/conf-available/remoteip.conf
 COPY docker/production/apache-remoteip-cloudflare.conf /etc/apache2/conf-available/remoteip-cloudflare.conf
+COPY docker/production/php-upload-limits.ini /usr/local/etc/php/conf.d/99-upload-limits.ini
 COPY docker/production/update-cloudflare-remoteip.sh /usr/local/bin/update-cloudflare-remoteip.sh
 RUN chmod +x /usr/local/bin/update-cloudflare-remoteip.sh \
     && /usr/local/bin/update-cloudflare-remoteip.sh /etc/apache2/conf-available/remoteip-cloudflare.conf \
