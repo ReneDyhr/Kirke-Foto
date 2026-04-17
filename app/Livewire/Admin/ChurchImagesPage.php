@@ -47,6 +47,11 @@ class ChurchImagesPage extends Component
             return;
         }
 
+        // Large JPEG decode + resize: raise limit for this request only (not global php.ini).
+        if (\function_exists('ini_set')) {
+            @\ini_set('memory_limit', '1024M');
+        }
+
         $this->validate([
             'photos.*' => 'image|mimes:jpg,jpeg|max:2097152',
         ]);
@@ -93,15 +98,16 @@ class ChurchImagesPage extends Component
                     }
                 }
 
-                // Process high-res
+                // Process high-res (large decodes need plenty of RAM; release before second read)
                 $high = $manager->read($file->getRealPath());
                 $high->scaleDown(width: $panorama ? 4000 : 1500);
                 $highBinary = (string) $high->toJpeg(85);
+                unset($high);
 
-                // Process thumbnail
                 $thumb = $manager->read($file->getRealPath());
                 $thumb->cover(500, 400);
                 $thumbBinary = (string) $thumb->toJpeg(80);
+                unset($thumb);
 
                 // Store on Wasabi (public)
                 $disk->put('church-images/high_' . $filename, $highBinary, ['visibility' => 'public']);
