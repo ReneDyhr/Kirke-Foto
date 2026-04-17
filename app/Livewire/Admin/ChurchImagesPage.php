@@ -76,9 +76,9 @@ class ChurchImagesPage extends Component
                     $filename .= '.jpg';
                 }
 
-                // EXIF date
+                // EXIF date (requires ext-exif)
                 $dateTaken = null;
-                $exif = @\exif_read_data($file->getRealPath()) ?: [];
+                $exif = (\function_exists('exif_read_data') ? @\exif_read_data($file->getRealPath()) : false) ?: [];
                 $dtoStr = \array_key_exists('DateTimeOriginal', $exif) ? $exif['DateTimeOriginal'] : null;
 
                 if (\is_string($dtoStr) && $dtoStr !== '') {
