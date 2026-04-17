@@ -47,9 +47,10 @@ class ChurchImagesPage extends Component
             return;
         }
 
-        // Large JPEG decode + resize: raise limit for this request only (not global php.ini).
+        // Large JPEG decode + resize + remote storage: relax limits for this request only.
         if (\function_exists('ini_set')) {
             @\ini_set('memory_limit', '1024M');
+            @\ini_set('max_execution_time', '600');
         }
 
         $this->validate([
